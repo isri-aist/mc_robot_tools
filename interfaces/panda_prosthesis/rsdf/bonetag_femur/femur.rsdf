@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<robot name="bonetag_femur">
+  <planar_surface name="FemurHead" link="base_link">
+    <origin xyz="0 0 0.15" rpy="0 0 0" />
+    <points>
+      <point xy="0.127 0.058" />
+      <point xy="-0.097 0.058" />
+      <point xy="-0.097 -0.038" />
+      <point xy="0.127 -0.038" />
+    </points>
+    <material name="plastic" />
+  </planar_surface>
+</robot>

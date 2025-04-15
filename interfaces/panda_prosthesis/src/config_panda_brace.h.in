@@ -1,0 +1,11 @@
+#pragma once
+
+namespace panda_prosthesis
+{
+
+// Fixed Leg attachement for the robot
+static constexpr auto brace_bottom_setup_DIR = "@brace_bottom_setup_DIR@";
+static constexpr auto brace_top_setup_DIR = "@brace_top_setup_DIR@";
+static constexpr auto brace_top_setup_brace_DIR = "@brace_top_setup_brace_DIR@";
+
+}

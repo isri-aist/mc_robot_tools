@@ -1,0 +1,31 @@
+# Location of data files, all path in the YAML file are
+# interpreted relative to this path unless they are absolute paths
+path: "@brace_bottom_setup_DIR@"
+name: brace_bottom_setup
+urdf_path: urdf/brace_bottom_setup.urdf
+fixed: true
+# Force sensors attached to this robot
+forceSensors:
+  - name: BraceTopForceSensor
+    parentBody: Link5
+    X_p_f:
+      rotation: [0, 0, 0]
+      translation: [0, 0, 0]
+  - name: BraceBottomForceSensor
+    parentBody: Link3
+    X_p_f:
+      translation: [0, 0, 0]
+      rotation: [0, 0, 0]
+
+convexHulls:
+  base_link: [base_link, "@brace_bottom_setup_DIR@/convex/base_link-ch.txt"]
+  Link1: [Link1, "@brace_bottom_setup_DIR@/convex/Link1-ch.txt"]
+  Link2: [Link2, "@brace_bottom_setup_DIR@/convex/Link2-ch.txt"]
+  Link3: [Link3, "@brace_bottom_setup_DIR@/convex/Link3-ch.txt"]
+  Link4: [Link4, "@brace_bottom_setup_DIR@/convex/Link4-ch.txt"]
+  Link5: [Link5, "@brace_bottom_setup_DIR@/convex/Link5-ch.txt"]
+  Link6: [Link6, "@brace_bottom_setup_DIR@/convex/Link6-ch.txt"]
+
+
+# Default orientation (quaternion) and position of the floating base
+default_attitude: [1., 0., 0., 0., 0., 0., 0.]

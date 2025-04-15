@@ -1,0 +1,1 @@
+brace_bottom_setup: [json, "@DATA_DIR@/yaml/brace_bottom_setup.yaml"]

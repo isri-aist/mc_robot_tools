@@ -1,0 +1,16 @@
+macro(generate_urdf_description NAME)
+  set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/${NAME}")
+  set(calib_DIR "${DATA_DIR}/calib")
+  set(meshes_DIR "${DATA_DIR}/meshes")
+  set(convex_DIR "${DATA_DIR}/convex")
+  set(rsdf_DIR "${DATA_DIR}/rsdf")
+
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/meshes DESTINATION "${DATA_DIR}" FILES_MATCHING PATTERN "*.stl")
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/convex DESTINATION "${DATA_DIR}" FILES_MATCHING PATTERN "*-ch.txt")
+
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/urdf/${NAME}.in.urdf "${CMAKE_CURRENT_BINARY_DIR}/urdf/${NAME}.urdf")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/urdf/${NAME}.urdf" DESTINATION "${DATA_DIR}/urdf")
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/rsdf/${NAME} DESTINATION "${DATA_DIR}/rsdf" FILES_MATCHING PATTERN "*.rsdf")
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/convex/${NAME} DESTINATION "${DATA_DIR}/convex" FILES_MATCHING PATTERN "*.txt")
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/meshes/${NAME} DESTINATION "${DATA_DIR}/meshes" FILES_MATCHING PATTERN "*.stl" PATTERN "*.STL" PATTERN "*.dae" PATTERN "*.DAE")
+endmacro(generate_urdf_description)

@@ -1,0 +1,5 @@
+# Location of data files, all path in the YAML file are
+# interpreted relative to this path unless they are absolute paths
+path: "@brace_urdf_DIR@"
+name: brace_urdf
+urdf_path: urdf/brace_urdf.urdf

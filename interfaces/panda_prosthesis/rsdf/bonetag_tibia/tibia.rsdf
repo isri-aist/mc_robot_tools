@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<robot name="bonetag_tibia">
+  <planar_surface name="TibiaHead" link="base_link">
+    <origin xyz="0 0 0.2" rpy="-1.57 0 0" />
+    <points>
+      <point xy="0.127 0.058" />
+      <point xy="-0.097 0.058" />
+      <point xy="-0.097 -0.038" />
+      <point xy="0.127 -0.038" />
+    </points>
+    <material name="plastic" />
+  </planar_surface>
+</robot>

@@ -1,0 +1,13 @@
+#pragma once
+
+namespace panda_prosthesis
+{
+
+static constexpr auto calib_DIR = "@calib_DIR@";
+static constexpr auto meshes_DIR = "@meshes_DIR@";
+static constexpr auto convex_DIR = "@convex_DIR@";
+static constexpr auto inertia_DIR = "@inertia_DIR@";
+static constexpr auto transforms_DIR = "@transforms_DIR@";
+static constexpr auto rsdf_DIR = "@rsdf_DIR@";
+
+}

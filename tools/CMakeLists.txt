@@ -1,0 +1,1 @@
+message(STATUS "Im generating new tools")

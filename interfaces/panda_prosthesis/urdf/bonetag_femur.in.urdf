@@ -1,0 +1,47 @@
+<robot name="bonetag_femur">
+    <link name="femur_base_link" />
+    <link name="support_femur">
+        <inertial>
+            <origin xyz="0 0 0.09"/>
+            <mass value="0.05"/>
+            <inertia ixx="-0.00026875" ixy="0" ixz="0" iyy="-0.00026875" iyz="0" izz="4.2e-07"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <mesh filename="@DATA_DIR@/meshes/bonetag_femur/support_femur.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="@DATA_DIR@/meshes/bonetag_femur/support_femur.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+    <link name="femur">
+        <inertial>
+            <origin xyz="0.00391 0.01947 0.02611"/>
+            <mass value="0.3954"/>
+            <inertia ixx="0.000302369" ixy="6.54824e-05" ixz="0.000112822" iyy="0.000427517" iyz="0.000426463" izz="0.000275033"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <mesh filename="@DATA_DIR@/meshes/bonetag_femur/femur.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="@DATA_DIR@/meshes/bonetag_femur/femur.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="ee_to_support" type="fixed">
+        <parent link="femur_base_link"/>
+        <child link="support_femur"/>
+        <origin rpy="0.00159265 3.14159 0.00159265"/>
+    </joint>
+    <joint name="support_to_prosthesis" type="fixed">
+        <parent link="support_femur"/>
+        <child link="femur"/>
+        <origin xyz="-0.04 0.04 -0.22" rpy="1.57 0 0"/>
+    </joint>
+</robot>

@@ -1,0 +1,14 @@
+# Location of data files, all path in the YAML file are
+# interpreted relative to this path unless they are absolute paths
+path: "@DATA_DIR@"
+name: bonetag_femur
+urdf_path: urdf/bonetag_femur.urdf
+rsdf_dir: rsdf/bonetag_femur
+fixed: true
+
+convexHulls:
+  support_femur: [support_femur, "@DATA_DIR@/convex/bonetag_femur/support_femur-ch.txt"]
+  femur: [femur, "@DATA_DIR@/convex/bonetag_femur/femur-ch.txt"]
+
+# Default orientation (quaternion) and position of the floating base
+default_attitude: [1., 0., 0., 0., 0., 0., 0.]
