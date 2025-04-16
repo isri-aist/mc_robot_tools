@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<robot name="palette_box">
+
+  <link name="base_link">
+
+    <!-- Visual mesh -->
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://@DATA_DIR@/meshes/palette_box/palette_box.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="matmarble">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+
+    <!-- Collision shapes -->
+
+    <!-- Sol -->
+    <collision>
+      <origin xyz="0 0 0.51" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.6 0.6 0.02"/>
+      </geometry>
+    </collision>
+
+    <!-- Mur gauche -->
+    <collision>
+      <origin xyz="-0.29 0 0.36" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.6 0.7"/>
+      </geometry>
+    </collision>
+
+    <!-- Mur droit -->
+    <collision>
+      <origin xyz="0.29 0 0.36" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.6 0.7"/>
+      </geometry>
+    </collision>
+
+    <!-- Mur arrière -->
+    <collision>
+      <origin xyz="0 -0.29 0.36" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.6 0.02 0.7"/>
+      </geometry>
+    </collision>
+
+    <!-- Mur avant -->
+    <collision>
+      <origin xyz="0 0.29 0.36" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.6 0.02 0.7"/>
+      </geometry>
+    </collision>
+
+    <!-- Inertial -->
+    <inertial>
+      <origin xyz="0 0 0.35" rpy="0 0 0"/>
+      <mass value="20.0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+
+  </link>
+
+</robot>
