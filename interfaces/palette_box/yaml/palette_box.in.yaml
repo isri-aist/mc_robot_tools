@@ -4,3 +4,6 @@ name: "palette_box"
 module: "palette_box"
 urdf: "urdf/palette_box.urdf"
 fixed: true
+
+convexHulls:
+  base_link: [base_link, "convex/palette_box/palette_box-ch.txt"]
