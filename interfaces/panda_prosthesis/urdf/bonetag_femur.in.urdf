@@ -8,12 +8,12 @@
         </inertial>
         <visual>
             <geometry>
-                <mesh filename="@DATA_DIR@/meshes/bonetag_femur/support_femur.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="file://@DATA_DIR@/meshes/bonetag_femur/support_femur.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="@DATA_DIR@/meshes/bonetag_femur/support_femur.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="file://@DATA_DIR@/meshes/bonetag_femur/support_femur.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </collision>
     </link>
@@ -25,12 +25,12 @@
         </inertial>
         <visual>
             <geometry>
-                <mesh filename="@DATA_DIR@/meshes/bonetag_femur/femur.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="file://@DATA_DIR@/meshes/bonetag_femur/femur.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <mesh filename="@DATA_DIR@/meshes/bonetag_femur/femur.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="file://@DATA_DIR@/meshes/bonetag_femur/femur.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </collision>
     </link>
