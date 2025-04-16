@@ -8,7 +8,6 @@ project(${PROJECT_NAME} LANGUAGES CXX VERSION 1.0.0)
 set(CMAKE_CXX_STANDARD 17)
 
 include(cmake/RobotModule.cmake)
-include(cmake/RobotInterface.cmake)
 
 find_package(mc_rtc REQUIRED)
 
