@@ -7,8 +7,6 @@ set(PROJECT_NAME palette_box)
 set(PROJECT_DESCRIPTION "Palette_box modules")
 set(PROJECT_URL "")
 
-find_package(mc_panda REQUIRED)
-
 ### Install description
 generate_urdf_description(${PROJECT_NAME})
 
