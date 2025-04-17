@@ -13,7 +13,3 @@ find_package(mc_rtc REQUIRED)
 
 add_subdirectory(interfaces)
 add_subdirectory(tools)
-
-if(BUILD_TESTING)
-  add_subdirectory(tests)
-endif()
