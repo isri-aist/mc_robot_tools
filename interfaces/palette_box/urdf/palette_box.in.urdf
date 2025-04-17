@@ -7,7 +7,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file://@DATA_DIR@/meshes/palette_box/palette_box.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="file://@DATA_DIR@/meshes/palette_box/palette_box.stl"/>
       </geometry>
       <material name="matmarble">
         <color rgba="0.7 0.7 0.7 1"/>
