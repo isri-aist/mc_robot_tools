@@ -8,7 +8,7 @@ set(PROJECT_DESCRIPTION "Palette_box modules")
 set(PROJECT_URL "")
 
 ### Install description
-generate_urdf_description(${PROJECT_NAME})
+generate_robot_description(${PROJECT_NAME})
 
 ### Generate Robot Module
 add_yaml_module(${PROJECT_NAME})

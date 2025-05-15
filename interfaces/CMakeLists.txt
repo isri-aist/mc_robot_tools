@@ -1,7 +1,7 @@
-file(GLOB modules "${CMAKE_CURRENT_SOURCE_DIR}/*")
+file(GLOB interfaces "${CMAKE_CURRENT_SOURCE_DIR}/*")
 
-foreach(mod ${modules})
-    if(IS_DIRECTORY ${mod})
-        add_subdirectory(${mod})
+foreach(interface ${interfaces})
+    if(IS_DIRECTORY ${interface})
+        add_subdirectory(${interface})
     endif()
 endforeach()

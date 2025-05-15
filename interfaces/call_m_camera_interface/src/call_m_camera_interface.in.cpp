@@ -2,8 +2,8 @@
 
 #include <RBDyn/parsers/urdf.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 namespace
 {
@@ -25,11 +25,11 @@ CallMCameraInterfaceRobotModule::CallMCameraInterfaceRobotModule() : mc_rbdyn::R
 
   // Automatically load the convex hulls associated to each body
   std::string convexPath = description_paths::convex_DIR;
-  bfs::path p(convexPath);
-  if(bfs::exists(p) && bfs::is_directory(p))
+  fs::path p(convexPath);
+  if(fs::exists(p) && fs::is_directory(p))
   {
-    std::vector<bfs::path> files;
-    std::copy(bfs::directory_iterator(p), bfs::directory_iterator(), std::back_inserter(files));
+    std::vector<fs::path> files;
+    std::copy(fs::directory_iterator(p), fs::directory_iterator(), std::back_inserter(files));
 
     _convexHull["camera_interface_link"] = std::pair<std::string, std::string>("camera_interface_link", files[0].string());
 
