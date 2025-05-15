@@ -7,9 +7,38 @@ set(PROJECT_DESCRIPTION "Robot tools for mc_rtc")
 project(${PROJECT_NAME} LANGUAGES CXX VERSION 1.0.0)
 set(CMAKE_CXX_STANDARD 17)
 
+include(cmake/install-3rd-party.cmake)
 include(cmake/RobotModule.cmake)
 
 find_package(mc_rtc REQUIRED)
 
 add_subdirectory(interfaces)
 add_subdirectory(tools)
+
+
+# Generate package file 
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION lib/cmake/${PROJECT_NAME}
+)
+
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+
+install(FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/install-3rd-party.cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/RobotModule.cmake
+    DESTINATION lib/cmake/${PROJECT_NAME}
+)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+    DESTINATION lib/cmake/${PROJECT_NAME}
+)
