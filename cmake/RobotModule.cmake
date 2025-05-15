@@ -29,9 +29,16 @@
                 COMMENT "Sampling mesh: ${MESH_FILE}"
             )
 
+            set(QCONVEX_PROGRAM)
+            if(INSTALL_3rd_PARTY)
+                set(QCONVEX_PROGRAM ${CMAKE_INSTALL_PREFIX}/bin/qconvex)
+            else()
+                find_program(QCONVEX_PROGRAM qconvex REQUIRED)
+            endif()
+
             add_custom_command(
                 OUTPUT ${QHULL_OUTPUT}
-                COMMAND ${CMAKE_INSTALL_PREFIX}/bin/qconvex TI ${SAMPLED_OUTPUT} TO ${QHULL_OUTPUT} Qt o f
+                COMMAND ${QCONVEX_PROGRAM} TI ${SAMPLED_OUTPUT} TO ${QHULL_OUTPUT} Qt o f
                 COMMAND ${CMAKE_COMMAND} -E rm -f ${SAMPLED_OUTPUT}
                 DEPENDS ${SAMPLED_OUTPUT}
                 COMMENT "Computing convex hull: ${QHULL_OUTPUT}"
