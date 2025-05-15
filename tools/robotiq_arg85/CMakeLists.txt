@@ -16,7 +16,7 @@ project(
 find_package(mc_rtc REQUIRED)
 
 ### Install description
-generate_urdf_description(${PROJECT_NAME})
+generate_robot_description(${PROJECT_NAME})
 
 ### Install robot module
 add_subdirectory(src)
