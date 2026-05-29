@@ -1,0 +1,3 @@
+#pragma once
+
+constexpr auto ROBOTIQ_DESCRIPTION_PATH = "@ROBOTIQ_DESCRIPTION_PATH@";
