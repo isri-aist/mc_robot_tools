@@ -9,7 +9,7 @@ This repo contains all the robot tools available with mc_rtc and allows you to i
 Using superbuild
 
 
-* From source 
+* From source
 
 ```bash
 git clone ...
@@ -28,13 +28,11 @@ MainRobot: PandaProsthesis::PandaDefault::BoneTag::Femur
 Enabled: Posture
 ```
 
-## Add new robot 
+## Add new robot
 
-In order to add a new tool or interface, you need to create a new folder with the given architecture : 
+In order to add a new tool or interface, you need to create a new folder with the given architecture :
 
 TODO add architecture
 
-You can also check the example given here : 
+You can also check the example given here :
 TODO add link
-
-

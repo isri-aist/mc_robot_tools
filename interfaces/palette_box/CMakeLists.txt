@@ -7,11 +7,8 @@ set(PROJECT_NAME palette_box)
 set(PROJECT_DESCRIPTION "Palette_box modules")
 set(PROJECT_URL "")
 
-### Install description
+# Install description
 generate_robot_description(${PROJECT_NAME})
 
-### Generate Robot Module
+# Generate Robot Module
 add_yaml_module(${PROJECT_NAME})
-
-
-

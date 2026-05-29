@@ -1,0 +1,36 @@
+ci:
+  autoupdate_schedule: quarterly
+repos:
+- repo: meta
+  hooks:
+  - id: check-useless-excludes
+  - id: check-hooks-apply
+- repo: https://github.com/pre-commit/mirrors-clang-format
+  rev: v21.1.7
+  hooks:
+  - id: clang-format
+    'types_or': [c++, c]
+- repo: https://github.com/pocc/pre-commit-hooks
+  rev: v1.3.5
+  hooks:
+    - id: clang-tidy
+      args: ["-p=build", "--quiet"]
+      stages: [manual]
+- repo: https://github.com/cheshirekow/cmake-format-precommit
+  rev: v0.6.13
+  hooks:
+  - id: cmake-format
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+  hooks:
+  # - id: check-added-large-files
+  # - id: check-ast # for python
+  - id: check-merge-conflict
+  - id: check-yaml
+  # - id: debug-statements # for python
+  - id: destroyed-symlinks
+  - id: detect-private-key
+  - id: end-of-file-fixer
+  - id: fix-byte-order-marker
+  - id: mixed-line-ending
+  - id: trailing-whitespace

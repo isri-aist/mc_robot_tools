@@ -16,7 +16,8 @@ static const std::string ROBOTIQ_ARG85_DESCRIPTION_PATH = "@DATA_DIR@";
 namespace mc_robots
 {
 
-RobotiqArg85RobotModule::RobotiqArg85RobotModule() : mc_rbdyn::RobotModule(ROBOTIQ_ARG85_DESCRIPTION_PATH, "robotiq_arg85")
+RobotiqArg85RobotModule::RobotiqArg85RobotModule()
+: mc_rbdyn::RobotModule(ROBOTIQ_ARG85_DESCRIPTION_PATH, "robotiq_arg85")
 {
   // True if the robot has a fixed base, false otherwise
   bool fixed = true;
@@ -31,8 +32,8 @@ RobotiqArg85RobotModule::RobotiqArg85RobotModule() : mc_rbdyn::RobotModule(ROBOT
     std::vector<fs::path> files;
     std::copy(fs::directory_iterator(p), fs::directory_iterator(), std::back_inserter(files));
 
-    // _convexHull["camera_interface_link"] = std::pair<std::string, std::string>("camera_interface_link", files[0].string());
-
+    // _convexHull["camera_interface_link"] = std::pair<std::string, std::string>("camera_interface_link",
+    // files[0].string());
   }
 }
 

@@ -12,12 +12,10 @@ project(
   LANGUAGES CXX
   VERSION 1.0.0)
 
-
 find_package(mc_rtc REQUIRED)
 
-### Install description
+# Install description
 generate_robot_description(${PROJECT_NAME})
 
-### Install robot module
+# Install robot module
 add_subdirectory(src)
-

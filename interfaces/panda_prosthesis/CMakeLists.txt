@@ -9,16 +9,13 @@ set(PROJECT_URL "")
 
 find_package(mc_panda REQUIRED)
 
-### Install description
+# Install description
 generate_robot_description(bonetag_tibia)
 generate_robot_description(bonetag_femur)
 
-### Generate Robot Module YAML
+# Generate Robot Module YAML
 add_yaml_module(bonetag_tibia)
 add_yaml_module(bonetag_femur)
 
-### Install robot module
+# Install robot module
 add_subdirectory(src)
-
-
-

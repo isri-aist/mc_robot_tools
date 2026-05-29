@@ -16,7 +16,8 @@ static const std::string MC_CALL_M_CAMERA_INTERFACE_DESCRIPTION_PATH = "@DATA_DI
 namespace mc_robots
 {
 
-CallMCameraInterfaceRobotModule::CallMCameraInterfaceRobotModule() : mc_rbdyn::RobotModule(MC_CALL_M_CAMERA_INTERFACE_DESCRIPTION_PATH, "call_m_camera_interface")
+CallMCameraInterfaceRobotModule::CallMCameraInterfaceRobotModule()
+: mc_rbdyn::RobotModule(MC_CALL_M_CAMERA_INTERFACE_DESCRIPTION_PATH, "call_m_camera_interface")
 {
   // True if the robot has a fixed base, false otherwise
   bool fixed = true;
@@ -31,8 +32,8 @@ CallMCameraInterfaceRobotModule::CallMCameraInterfaceRobotModule() : mc_rbdyn::R
     std::vector<fs::path> files;
     std::copy(fs::directory_iterator(p), fs::directory_iterator(), std::back_inserter(files));
 
-    _convexHull["camera_interface_link"] = std::pair<std::string, std::string>("camera_interface_link", files[0].string());
-
+    _convexHull["camera_interface_link"] =
+        std::pair<std::string, std::string>("camera_interface_link", files[0].string());
   }
 }
 

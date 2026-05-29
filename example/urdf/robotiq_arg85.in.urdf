@@ -203,7 +203,7 @@
       link="left_inner_knuckle" />
     <axis
       xyz="0 -1 0" />
-    <mimic 
+    <mimic
       joint="finger_joint"
       multiplier="1"
       offset="0" />
@@ -260,7 +260,7 @@
       link="left_inner_finger" />
     <axis
       xyz="0 -1 0" />
-    <mimic 
+    <mimic
       joint="finger_joint"
       multiplier="-1"
       offset="0" />
@@ -317,7 +317,7 @@
       link="right_inner_knuckle" />
     <axis
       xyz="0 1 0" />
-    <mimic 
+    <mimic
       joint="finger_joint"
       multiplier="-1"
       offset="0" />
@@ -374,7 +374,7 @@
       link="right_inner_finger" />
     <axis
       xyz="0 1 0" />
-    <mimic 
+    <mimic
       joint="finger_joint"
       multiplier="1"
       offset="0" />
@@ -431,7 +431,7 @@
       link="right_outer_knuckle" />
     <axis
       xyz="0 1 0" />
-    <mimic 
+    <mimic
       joint="finger_joint"
       multiplier="-1"
       offset="0" />
