@@ -60,15 +60,6 @@ PandaBraceCommonRobotModule<DebugLog>::PandaBraceCommonRobotModule(const std::st
         {
           log_info("[PandaBrace] Add body {}", name);
           mbg.addBody(bodies[bodyIdx]);
-          auto convex = bfs::path(robot_description_path_) / "convex" / (name + "-ch.txt");
-          if(!bfs::exists(convex))
-          {
-            mc_rtc::log::error_and_throw<std::runtime_error>("Invalid brace_top_setup, no convex found {}",
-                                                             convex.string());
-          }
-          _visual[name] = brace_urdf.visual.at(name);
-          _collision[name] = brace_urdf.collision.at(name);
-          _convexHull[name] = {name, convex.string()};
         };
 
         if(first_add)

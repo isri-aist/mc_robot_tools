@@ -6,9 +6,5 @@ urdf_path: urdf/bonetag_femur.urdf
 rsdf_dir: rsdf/bonetag_femur
 fixed: true
 
-convexHulls:
-  support_femur: [support_femur, "@MODULE_INSTALL_LOCATION@/convex/bonetag_femur/support_femur-ch.txt"]
-  femur: [femur, "@MODULE_INSTALL_LOCATION@/convex/bonetag_femur/femur-ch.txt"]
-
 # Default orientation (quaternion) and position of the floating base
 default_attitude: [1., 0., 0., 0., 0., 0., 0.]

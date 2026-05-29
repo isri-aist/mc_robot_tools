@@ -6,9 +6,5 @@ urdf_path: urdf/bonetag_tibia.urdf
 rsdf_dir: rsdf/bonetag_tibia
 fixed: true
 
-convexHulls:
-  support_tibia: [support_tibia, "@MODULE_INSTALL_LOCATION@/convex/bonetag_tibia/support_tibia-ch.txt"]
-  tibia: [tibia, "@MODULE_INSTALL_LOCATION@/convex/bonetag_tibia/tibia-ch.txt"]
-
 # Default orientation (quaternion) and position of the floating base
 default_attitude: [1., 0., 0., 0., 0., 0., 0.]

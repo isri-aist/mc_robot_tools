@@ -2,5 +2,4 @@
 .cache
 build
 tests/
-**/convex/**
 3rd-party

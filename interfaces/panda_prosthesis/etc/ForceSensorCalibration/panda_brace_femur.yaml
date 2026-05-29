@@ -50,19 +50,3 @@ motion:
   - name: panda_joint7
     period: 27
     percentLimits: 0.5
-collisions:
-- body1: convex_panda_link6
-  body2: ground
-  iDist: 0.1
-  sDist: 0.04
-  damping: 0.0
-- body1: convex_panda_link7
-  body2: ground
-  iDist: 0.1
-  sDist: 0.04
-  damping: 0.0
-- body1: Link2
-  body2: ground
-  iDist: 0.1
-  sDist: 0.04
-  damping: 0.0
