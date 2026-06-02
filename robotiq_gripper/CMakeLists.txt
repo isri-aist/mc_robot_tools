@@ -29,11 +29,13 @@ endif()
 set(MC_ROBOTIQ_GRIPPER_SHARE_DIR
     "${CMAKE_INSTALL_PREFIX}/share/mc_robotiq_gripper")
 set(MC_ROBOTIQ_GRIPPER_URDF_DIR "${MC_ROBOTIQ_GRIPPER_SHARE_DIR}/urdf")
+set(MC_ROBOTIQ_GRIPPER_RSDF_DIR "${MC_ROBOTIQ_GRIPPER_SHARE_DIR}/rsdf")
 
 set(ROBOTIQ_DESCRIPTION_PATH "${MC_ROBOTIQ_GRIPPER_SHARE_DIR}")
 
 # Glob all xacro files for dependency tracking
-file(GLOB_RECURSE ROBOTIQ_XACRO_FILES "${ROBOTIQ_DESCRIPTION_SHARE}/*.xacro")
+file(GLOB_RECURSE ROBOTIQ_XACRO_FILES
+     "${CMAKE_CURRENT_SOURCE_DIR}/xacro/*.xacro")
 
 # Models to generate
 set(ROBOTIQ_MODELS "robotiq_2f_85_gripper" "robotiq_2f_140_gripper")
@@ -41,7 +43,7 @@ set(ROBOTIQ_MODELS "robotiq_2f_85_gripper" "robotiq_2f_140_gripper")
 set(GENERATED_URDF_FILES "")
 
 foreach(MODEL ${ROBOTIQ_MODELS})
-  set(XACRO_IN "${ROBOTIQ_DESCRIPTION_SHARE}/urdf/${MODEL}.urdf.xacro")
+  set(XACRO_IN "${CMAKE_CURRENT_SOURCE_DIR}/xacro/${MODEL}.urdf.xacro")
   set(URDF_OUT "${CMAKE_CURRENT_BINARY_DIR}/urdf/${MODEL}.urdf")
 
   message(STATUS "URDF generation: ${XACRO_IN} -> ${URDF_OUT}")
@@ -65,9 +67,10 @@ add_custom_target(generate-robotiq-urdf ALL DEPENDS ${GENERATED_URDF_FILES})
 
 add_subdirectory(src)
 
+install(FILES ${GENERATED_URDF_FILES}
+        DESTINATION ${MC_ROBOTIQ_GRIPPER_URDF_DIR})
+install(DIRECTORY rsdf/ DESTINATION ${MC_ROBOTIQ_GRIPPER_RSDF_DIR})
+
 if(BUILD_TESTING)
   add_subdirectory(tests)
 endif()
-
-install(FILES ${GENERATED_URDF_FILES}
-        DESTINATION ${MC_ROBOTIQ_GRIPPER_URDF_DIR})

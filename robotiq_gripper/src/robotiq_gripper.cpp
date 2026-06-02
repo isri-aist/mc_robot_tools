@@ -12,7 +12,10 @@ namespace mc_robots
 RobotiqGripperRobotModule::RobotiqGripperRobotModule(const std::string & name)
 : mc_rbdyn::RobotModule(ROBOTIQ_DESCRIPTION_PATH, name)
 {
-  init(rbd::parsers::from_urdf_file(urdf_path, false));
+  bool fixed = false;
+  init(rbd::parsers::from_urdf_file(urdf_path, fixed));
+
+  rsdf_dir = MC_ROBOTIQ_GRIPPER_RSDF_DIR;
 }
 
 } // namespace mc_robots
