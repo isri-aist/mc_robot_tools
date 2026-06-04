@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<robot name="ds4">
+  <planar_surface name="Base" link="ds4_base_link">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+    <points>
+      <point xy="-0.0375 -0.0375" />
+      <point xy="0.0375 -0.0375" />
+      <point xy="0.0375 0.0375" />
+      <point xy="-0.0375 0.0375" />
+    </points>
+    <material name="plastic" />
+  </planar_surface>
+</robot>

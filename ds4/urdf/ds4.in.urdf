@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot name="ds4">
+    <link name="ds4_base_link"/>
+
+    <link name="ds4_adapter_link">
+        <visual name="ds4_adapter_visual">
+            <geometry>
+                <mesh filename="file://@MC_MESH_DIR@/ds4_adapter.stl"/>
+            </geometry>
+            <material name="grey">
+                <color rgba="0.6 0.6 0.6 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="-0.0001681638469675113 -0.0024779164507503317 0.059811455964133025" rpy="0 0 0"/>
+            <mass value="0.0698"/>
+            <inertia ixx="5.40350E-05" ixy="8.13203E-08" ixz="1.70226E-06"
+                    iyy="5.69809E-05" iyz="1.05961E-06" izz="8.81951E-05"/>
+        </inertial>
+        <collision name="ds4_adapter_collision">
+            <geometry>
+                <mesh filename="file://@MC_MESH_DIR@/ds4_adapter.stl"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="ds4_actual_controller_link">
+        <visual name="ds4_actual_controller">
+            <geometry>
+                <box size="0.14 0.03 0.06"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.7 0.6 0.5 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.0 0.0 0.045" rpy="0 0 0"/>
+            <mass value="0.2162"/>
+            <inertia ixx="5.40350E-05" ixy="8.13203E-08" ixz="1.70226E-06"
+                    iyy="5.69809E-05" iyz="1.05961E-06" izz="8.81951E-05"/>
+        </inertial>
+    </link>
+
+    <joint name="ds4_adapter_joint" type="fixed">
+        <parent link="ds4_base_link"/>
+        <child link="ds4_adapter_link"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="ds4_actual_controller_joint" type="fixed">
+        <parent link="ds4_base_link"/>
+        <child link="ds4_actual_controller_link"/>
+        <origin xyz="0.0 0.0 0.08" rpy="0 0 0"/>
+    </joint>
+
+</robot>
