@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-mc_rtc_setup_package(mc_bota_sensor 1.0.0)
+mc_rtc_setup_package(bota_sensor 1.0.0)
 
 find_description_package(bota_driver REQUIRED)
 

@@ -1,9 +1,10 @@
 configure_file(config.in.h "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 
-set(BOTA_SENSOR_SRC "${CMAKE_CURRENT_SOURCE_DIR}/bota_sensor.cpp")
-set(BOTA_SENSOR_HDR "${CMAKE_CURRENT_SOURCE_DIR}/bota_sensor.h")
+set(SRC "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.cpp")
+set(HDR "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.h")
 
-add_robot(bota_sensor ${BOTA_SENSOR_SRC} ${BOTA_SENSOR_HDR})
+add_robot(${PROJECT_NAME} ${SRC} ${HDR})
 
-target_include_directories(bota_sensor PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
-                                               "${CMAKE_CURRENT_BINARY_DIR}")
+target_include_directories(
+  ${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
+                          "${CMAKE_CURRENT_BINARY_DIR}")

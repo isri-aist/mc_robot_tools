@@ -1,9 +1,10 @@
 configure_file(config.in.h "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 
-set(DS4_SRC "${CMAKE_CURRENT_SOURCE_DIR}/ds4.cpp")
-set(DS4_HDR "${CMAKE_CURRENT_SOURCE_DIR}/ds4.h")
+set(SRC "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.cpp")
+set(HDR "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.h")
 
-add_robot(ds4 ${DS4_SRC} ${DS4_HDR})
+add_robot(${PROJECT_NAME} ${SRC} ${HDR})
 
-target_include_directories(ds4 PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
-                                       "${CMAKE_CURRENT_BINARY_DIR}")
+target_include_directories(
+  ${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
+                          "${CMAKE_CURRENT_BINARY_DIR}")
