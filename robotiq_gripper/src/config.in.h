@@ -1,5 +1,4 @@
 #pragma once
 
-constexpr auto ROBOTIQ_DESCRIPTION_PATH = "@ROBOTIQ_DESCRIPTION_PATH@";
-constexpr auto MC_ROBOTIQ_GRIPPER_URDF_DIR = "@MC_ROBOTIQ_GRIPPER_URDF_DIR@";
-constexpr auto MC_ROBOTIQ_GRIPPER_RSDF_DIR = "@MC_ROBOTIQ_GRIPPER_RSDF_DIR@";
+constexpr auto MC_DATA_PATH = "@MC_SHARE_DIR@";
+constexpr auto MC_RSDF_DIR = "@MC_RSDF_DIR@";
