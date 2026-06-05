@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot name="plate">
+    <link name="plate_base_link"/>
+
+    <link name="plate_link">
+        <visual name="plate">
+            <origin xyz="0.0 0.0 0.0" rpy="-1.57079632679 0 0.78539816339" />
+            <geometry>
+                <mesh filename="file://@MC_MESH_DIR@/plate.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="grey">
+                <color rgba="0.6 0.6 0.6 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="-0.0001681638469675113 -0.0024779164507503317 0.059811455964133025" rpy="0 0 0"/>
+            <mass value="0.0698"/>
+            <inertia ixx="5.40350E-05" ixy="8.13203E-08" ixz="1.70226E-06"
+                    iyy="5.69809E-05" iyz="1.05961E-06" izz="8.81951E-05"/>
+        </inertial>
+
+        <!-- Using mesh for collision is preferred when scaling issues are fixed -->
+        <collision>
+            <origin xyz="0 0 0.015" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.0075" length="0.03" />
+                <box size="0.15 0.06 0.2"/>
+            </geometry>
+        </collision>
+        <!-- <collision name="plate_collision">
+            <origin xyz="0.0 0.0 0.0" rpy="-1.57079632679 0 0.78539816339" />
+            <geometry>
+                <mesh scale="0.001 0.001 0.001" filename="file://@MC_MESH_DIR@/plate.stl" />
+            </geometry>
+        </collision> -->
+    </link>
+
+    <joint name="plate_adapter_joint" type="fixed">
+        <parent link="plate_base_link"/>
+        <child link="plate_link"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </joint>
+</robot>
