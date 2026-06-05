@@ -18,6 +18,7 @@ find_package(mc_rtc REQUIRED)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/mc_rtc_macros.cmake)
 
+add_subdirectory(camera)
 add_subdirectory(ds4)
 add_subdirectory(plate)
 add_subdirectory(screw)
