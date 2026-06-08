@@ -39,6 +39,12 @@
             <inertia ixx="5.40350E-05" ixy="8.13203E-08" ixz="1.70226E-06"
                     iyy="5.69809E-05" iyz="1.05961E-06" izz="8.81951E-05"/>
         </inertial>
+        <collision name="ds4_actual_controller_collision">
+            <origin xyz="0.0 0.0 0.045" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.14 0.03 0.06"/>
+            </geometry>
+        </collision>
     </link>
 
     <joint name="ds4_adapter_joint" type="fixed">
