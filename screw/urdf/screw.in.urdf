@@ -4,7 +4,7 @@
 
     <link name="screw_link">
         <visual name="screw">
-            <origin xyz="0.0 0.0 0.0" rpy="-1.57079632679 0 0.78539816339"/>
+            <origin xyz="0.0 0.0 0.0" rpy="-1.5708 0 0"/>
             <geometry>
                 <mesh filename="file://@MC_MESH_DIR@/screw.stl"/>
             </geometry>
@@ -19,7 +19,7 @@
                     iyy="5.69809E-05" iyz="1.05961E-06" izz="8.81951E-05"/>
         </inertial>
         <collision name="screw_collision">
-            <origin xyz="0.0 0.0 0.0" rpy="-1.57079632679 0 0.78539816339" />
+            <origin xyz="0.0 0.0 0.0" rpy="-1.5708 0 0"/>
             <geometry>
                 <mesh scale="0.001 0.001 0.001" filename="file://@MC_MESH_DIR@/screw.stl" />
             </geometry>
