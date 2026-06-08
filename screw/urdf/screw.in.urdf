@@ -6,7 +6,7 @@
         <visual name="screw">
             <origin xyz="0.0 0.0 0.0" rpy="-1.57079632679 0 0.78539816339"/>
             <geometry>
-                <mesh filename="file://@MC_MESH_DIR@/screw.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="file://@MC_MESH_DIR@/screw.stl"/>
             </geometry>
             <material name="grey">
                 <color rgba="0.7 0.6 0.5 1"/>
@@ -18,20 +18,12 @@
             <inertia ixx="5.40350E-05" ixy="8.13203E-08" ixz="1.70226E-06"
                     iyy="5.69809E-05" iyz="1.05961E-06" izz="8.81951E-05"/>
         </inertial>
-
-        <!-- Using mesh for collision is preferred when scaling issues are fixed -->
-        <collision>
-            <origin xyz="0 0 0.015" rpy="0 0 0"/>
-            <geometry>
-                <cylinder radius="0.030" length="0.07"/>
-            </geometry>
-        </collision>
-        <!-- <collision name="screw_collision">
+        <collision name="screw_collision">
             <origin xyz="0.0 0.0 0.0" rpy="-1.57079632679 0 0.78539816339" />
             <geometry>
                 <mesh scale="0.001 0.001 0.001" filename="file://@MC_MESH_DIR@/screw.stl" />
             </geometry>
-        </collision> -->
+        </collision>
     </link>
 
     <joint name="screw_joint" type="fixed">

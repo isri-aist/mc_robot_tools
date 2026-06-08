@@ -6,7 +6,7 @@
         <visual name="plate">
             <origin xyz="0.0 0.0 0.0" rpy="-1.57079632679 0 0.78539816339" />
             <geometry>
-                <mesh filename="file://@MC_MESH_DIR@/plate.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="file://@MC_MESH_DIR@/plate.stl"/>
             </geometry>
             <material name="grey">
                 <color rgba="0.6 0.6 0.6 1"/>
@@ -20,19 +20,19 @@
         </inertial>
 
         <!-- Using mesh for collision is preferred when scaling issues are fixed -->
-        <collision>
+        <!-- <collision>
             <origin xyz="0 0 0.11" rpy="0 0 0" />
             <geometry>
                 <cylinder radius="0.0075" length="0.03" />
                 <box size="0.16 0.03 0.22"/>
             </geometry>
-        </collision>
-        <!-- <collision name="plate_collision">
+        </collision> -->
+        <collision name="plate_collision">
             <origin xyz="0.0 0.0 0.0" rpy="-1.57079632679 0 0.78539816339" />
             <geometry>
-                <mesh scale="0.001 0.001 0.001" filename="file://@MC_MESH_DIR@/plate.stl" />
+                <mesh filename="file://@MC_MESH_DIR@/plate.stl" />
             </geometry>
-        </collision> -->
+        </collision>
     </link>
 
     <joint name="plate_joint" type="fixed">
