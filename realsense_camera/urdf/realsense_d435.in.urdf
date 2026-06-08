@@ -4,7 +4,7 @@
 
     <link name="realsense_d435_bracket_link">
         <visual name="bracket">
-            <origin xyz="-0.0375 0.055  0" rpy="1.5708 0 0"/>
+            <origin xyz="0.0375 -0.055  0" rpy="1.5708 3.14159 0"/>
             <geometry>
                 <mesh filename="file://@MC_MESH_DIR@/realsense_d435_bracket.stl"/>
             </geometry>
@@ -13,13 +13,14 @@
             </material>
         </visual>
         <inertial>
-            <origin xyz="-0.0375 0.055  0" rpy="1.5708 0 0"/>
+            <origin xyz="0.0375 -0.055  0" rpy="1.5708 3.14159 0"/>
             <mass value="0.0698"/>
             <inertia ixx="5.40350E-05" ixy="8.13203E-08" ixz="1.70226E-06"
                     iyy="5.69809E-05" iyz="1.05961E-06" izz="8.81951E-05"/>
         </inertial>
-        <collision name="screw_collision">
-            <origin xyz="-0.0375 0.055  0" rpy="1.5708 0 0"/>
+        <collision>
+            <!-- There might be an bug in how convex is being generated -->
+            <origin xyz="0.0375 -0.055  0" rpy="1.5708 0 3.14159"/>
             <geometry>
                 <mesh filename="file://@MC_MESH_DIR@/realsense_d435_bracket.stl"/>
             </geometry>
@@ -28,7 +29,7 @@
 
     <link name = "realsense_d435_camera_link">
         <visual name="camera">
-            <origin xyz="0. 0.055 0.02025" rpy="0 0 0"/>
+            <origin xyz="0. -0.055 0.02025" rpy="0 0 0"/>
             <geometry>
                 <box size="0.09 0.0243 0.0285"/>
             </geometry>
@@ -37,13 +38,13 @@
             </material>
         </visual>
         <inertial>
-            <origin xyz="0. 0.055 0.02025" rpy="0 0 0"/>
+            <origin xyz="0. -0.055 0.02025" rpy="0 0 0"/>
             <mass value="0.0698"/>
             <inertia ixx="5.40350E-05" ixy="8.13203E-08" ixz="1.70226E-06"
                     iyy="5.69809E-05" iyz="1.05961E-06" izz="8.81951E-05"/>
         </inertial>
         <collision>
-            <origin xyz="0. 0.055 0.02025" rpy="0 0 0"/>
+            <origin xyz="0. -0.055 0.02025" rpy="0 0 0"/>
             <geometry>
                 <box size="0.09 0.0243 0.0285"/>
             </geometry>
@@ -55,7 +56,7 @@
     <joint name="realsense_d435_bracket_joint" type="fixed">
         <parent link="realsense_d435_base_link"/>
         <child link="realsense_d435_bracket_link"/>
-        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 3.14159"/>
     </joint>
 
     <joint name="realsense_d435_camera_joint" type="fixed">
