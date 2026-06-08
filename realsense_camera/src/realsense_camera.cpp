@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "realsense_camera.h"
 #include "config.h"
 
 #include <RBDyn/parsers/urdf.h>
@@ -9,7 +9,8 @@ namespace bfs = boost::filesystem;
 namespace mc_robots
 {
 
-CameraRobotModule::CameraRobotModule(const std::string & name) : mc_rbdyn::RobotModule(MC_DATA_PATH, name)
+RealSenseCameraRobotModule::RealSenseCameraRobotModule(const std::string & name)
+: mc_rbdyn::RobotModule(MC_DATA_PATH, name)
 {
   bool fixed = false;
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));

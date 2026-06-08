@@ -8,9 +8,9 @@
 namespace mc_robots
 {
 
-struct MC_ROBOTS_DLLAPI CameraRobotModule : public mc_rbdyn::RobotModule
+struct MC_ROBOTS_DLLAPI RealSenseCameraRobotModule : public mc_rbdyn::RobotModule
 {
-  CameraRobotModule(const std::string & name);
+  RealSenseCameraRobotModule(const std::string & name);
 };
 
 } // namespace mc_robots
@@ -19,7 +19,7 @@ extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names) // NOLINT(readability-identifier-naming)
   {
-    names = {"Camera"};
+    names = {"RealSenseD435"};
   }
 
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
@@ -29,14 +29,14 @@ extern "C"
 
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & n)
   {
-    ROBOT_MODULE_CHECK_VERSION("Camera")
+    ROBOT_MODULE_CHECK_VERSION("RealSenseCamera")
 
-    if(n == "Camera")
+    if(n == "RealSenseD435")
     {
-      return new mc_robots::CameraRobotModule("camera");
+      return new mc_robots::RealSenseCameraRobotModule("realsense_d435");
     }
 
-    mc_rtc::log::error("Camera module cannot create an object of type {}", n);
+    mc_rtc::log::error("RealSenseCamera module cannot create an object of type {}", n);
     return nullptr;
   }
 }

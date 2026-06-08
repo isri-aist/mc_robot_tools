@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<robot name="camera">
-  <planar_surface name="Base" link="camera_base_link">
+<robot name="realsense_d435">
+  <planar_surface name="Base" link="realsense_d435_base_link">
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
     <points>
       <point xy="-0.0375 -0.0375" />

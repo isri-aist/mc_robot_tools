@@ -1,6 +1,6 @@
-set(TEST_MODELS "Camera")
+set(TEST_MODELS "RealSenseD435")
 
-if(TARGET camera)
+if(TARGET realsense_camera)
   foreach(MODEL ${TEST_MODELS})
     string(TOLOWER ${MODEL} MODEL_LOWER)
     set(ROBOT_MODULE_PARAMS "\"${MODEL}\"")

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<robot name="camera">
-    <link name="camera_base_link"/>
+<robot name="realsense_d435">
+    <link name="realsense_d435_base_link"/>
 
-    <link name="bracket_link">
-        <visual name="camera">
+    <link name="realsense_d435_bracket_link">
+        <visual name="bracket">
             <origin xyz="-0.0375 0.055  0" rpy="1.5708 0 0"/>
             <geometry>
-                <mesh filename="file://@MC_MESH_DIR@/bracket.stl"/>
+                <mesh filename="file://@MC_MESH_DIR@/realsense_d435_bracket.stl"/>
             </geometry>
             <material name="grey">
                 <color rgba="0.7 0.6 0.5 1"/>
@@ -21,12 +21,12 @@
         <collision name="screw_collision">
             <origin xyz="-0.0375 0.055  0" rpy="1.5708 0 0"/>
             <geometry>
-                <mesh filename="file://@MC_MESH_DIR@/bracket.stl"/>
+                <mesh filename="file://@MC_MESH_DIR@/realsense_d435_bracket.stl"/>
             </geometry>
         </collision>
     </link>
 
-    <link name = "camera_link">
+    <link name = "realsense_d435_camera_link">
         <visual name="camera">
             <origin xyz="0. 0.055 0.02025" rpy="0 0 0"/>
             <geometry>
@@ -50,16 +50,23 @@
         </collision>
     </link>
 
-    <joint name="camera_joint_1" type="fixed">
-        <parent link="camera_base_link"/>
-        <child link="bracket_link"/>
+    <link name="realsense_d435_wrench_link"/>
+
+    <joint name="realsense_d435_bracket_joint" type="fixed">
+        <parent link="realsense_d435_base_link"/>
+        <child link="realsense_d435_bracket_link"/>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     </joint>
 
-
-    <joint name="camera_joint_2" type="fixed">
-        <parent link="bracket_link"/>
-        <child link="camera_link"/>
+    <joint name="realsense_d435_camera_joint" type="fixed">
+        <parent link="realsense_d435_bracket_link"/>
+        <child link="realsense_d435_camera_link"/>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="realsense_d435_wrench_joint" type="fixed">
+        <parent link="realsense_d435_bracket_link"/>
+        <child link="realsense_d435_wrench_link"/>
+        <origin xyz="0.0 0.0 0.006" rpy="0 0 0"/>
     </joint>
 </robot>
