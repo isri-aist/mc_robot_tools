@@ -1,6 +1,0 @@
-
-path: "@DATA_DIR@"
-name: "palette_box"
-module: "palette_box"
-urdf: "urdf/palette_box.urdf"
-fixed: true

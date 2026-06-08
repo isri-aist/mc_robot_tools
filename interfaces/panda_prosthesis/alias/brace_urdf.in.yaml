@@ -1,1 +1,0 @@
-brace_urdf: [json, "@DATA_DIR@/yaml/brace_urdf.yaml"]
