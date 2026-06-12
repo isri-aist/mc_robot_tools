@@ -46,7 +46,10 @@ extern "C"
 
     for(const auto & model : BOTA_MODELS)
     {
-      if(n == model) return new mc_robots::BotaSensorRobotModule(toLower(model));
+      if(n == model)
+      {
+        return new mc_robots::BotaSensorRobotModule(toLower(model));
+      }
     }
 
     mc_rtc::log::error("BotaSensor module cannot create an object of type {}", n);

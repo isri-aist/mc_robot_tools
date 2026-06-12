@@ -14,8 +14,9 @@ repos:
   rev: v1.3.5
   hooks:
     - id: clang-tidy
-      args: ["-p=build", "--quiet"]
+      args: ["-p=build", "--quiet", "-extra-arg=-std=c++17"]
       stages: [manual]
+      exclude: '^.*\.in\.(cpp|h)$'
 - repo: https://github.com/cheshirekow/cmake-format-precommit
   rev: v0.6.13
   hooks:
