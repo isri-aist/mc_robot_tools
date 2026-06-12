@@ -27,6 +27,39 @@ make && sudo make install
 |**robotiq_gripper**|[ros2_robotiq_gripper/robotiq_description](https://github.com/PickNikRobotics/ros2_robotiq_gripper/tree/main/robotiq_description)|
 |**screw**|None|
 
+## Usage
+
+By themselves, there won't be much you can do with these sensors. To attach them to another robots, consider the following method:
+
+```cpp
+auto robot = mc_rbdyn::RobotLoader::get_robot_module("<robot_name>");
+auto tool = mc_rbdyn::RobotLoader::get_robot_module("<tool_name>");
+auto robot_tool = robot.connect(*tool, "<robot_frame>", "<tool_frame>", "",
+                                mc_rbdyn::RobotModule::ConnectionParameters{}.X_other_connection(sva::RotZ(0.0)));
+
+// Add links for self collisions
+const double COL_I = 0.03;
+const double COL_S = 0.015;
+const double COL_D = 0.0;
+auto addToolCollisions = [COL_I, COL_S, COL_D](mc_rbdyn::RobotModule &module,
+                                                const std::vector<std::string> &robot_collision_links,
+                                                const std::vector<std::string> &tool_collision_links) {
+  for (const auto &robot_link : robot_collision_links)
+  {
+    for (const auto &tool_link : tool_collision_links)
+    {
+      module._minimalSelfCollisions.push_back({robot_link, tool_link, COL_I, COL_S, COL_D});
+    }
+  }
+  module._commonSelfCollisions = module._minimalSelfCollisions;
+};
+
+addToolCollisions(robot_tool, {"<robot_link_1>", "<robot_link_2>", "<robot_link_3>"},
+                  {"<tool_link_1>", "<tool_link_2>", "<tool_link_3>"});
+```
+
+Noted that none of the constraints are attached to the new loaded robot, you need to manually define and add them to the solver.
+
 ## Development
 
 Tool modules generally fall into one of two implementation categories:
