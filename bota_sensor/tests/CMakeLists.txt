@@ -15,7 +15,7 @@ set(TEST_MODELS
     "BFT_ROKS_ECAT_M8"
     "BFT_SENS_SER_M8")
 
-if(TARGET bota_sensor)
+if(TARGET ${PROJECT_NAME})
   foreach(MODEL ${TEST_MODELS})
     string(TOLOWER ${MODEL} MODEL_LOWER)
     set(ROBOT_MODULE_PARAMS "\"${MODEL}\"")

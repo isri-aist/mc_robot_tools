@@ -1,6 +1,6 @@
 set(TEST_MODELS "DS4")
 
-if(TARGET ds4)
+if(TARGET ${PROJECT_NAME})
   foreach(MODEL ${TEST_MODELS})
     string(TOLOWER ${MODEL} MODEL_LOWER)
     set(ROBOT_MODULE_PARAMS "\"${MODEL}\"")
