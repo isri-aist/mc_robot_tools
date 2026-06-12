@@ -1,6 +1,6 @@
 set(TEST_MODELS "Robotiq2f85Gripper" "Robotiq2f140Gripper")
 
-if(TARGET robotiq_gripper)
+if(TARGET ${PROJECT_NAME})
   foreach(MODEL ${TEST_MODELS})
     string(TOLOWER ${MODEL} MODEL_LOWER)
     set(ROBOT_MODULE_PARAMS "\"${MODEL}\"")
