@@ -1,0 +1,101 @@
+name: ci
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+  schedule:
+    - cron: '0 23 * * 0,1,4'
+
+jobs:
+  build_opus:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        build-type: [RelWithDebInfo]
+        compiler: [gcc]
+
+    env:
+      ROS_DISTRO: humble
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Run pre-commit
+        run: |
+          pip install pre-commit
+          pre-commit run --all-files
+
+      - name: Setup ROS
+        run: |
+          set -eux
+
+          sudo apt update
+          sudo apt install -y curl gnupg2 lsb-release ca-certificates
+
+          sudo mkdir -p /etc/apt/keyrings
+          curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc \
+            | gpg --dearmor \
+            | sudo tee /etc/apt/keyrings/ros-archive-keyring.gpg > /dev/null
+
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/ros-archive-keyring.gpg] \
+          http://packages.ros.org/ros2/ubuntu \
+          $(lsb_release -cs) main" \
+            | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+          sudo apt update
+          sudo apt install -y ros-${ROS_DISTRO}-ros-base
+
+      - name: Install mc_rtc
+        run: |
+          set -e
+
+          curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/head/setup.deb.sh' | sudo -E bash
+
+          sudo apt update
+          sudo apt install -y -qq \
+            libmc-rtc-dev \
+            ros-${ROS_DISTRO}-mc-rtc-plugin \
+            ros-${ROS_DISTRO}-xacro
+
+      - name: Install ROS description packages
+        run: |
+          set -e
+          source /opt/ros/${ROS_DISTRO}/setup.bash
+          sudo apt install -y python3-colcon-common-extensions
+
+          mkdir -p /tmp/ros2_ws/src
+          cd /tmp/ros2_ws/src
+          git clone --depth 1 https://gitlab.com/botasys/drivers/bota_driver_ros2
+          git clone --depth 1 https://github.com/PickNikRobotics/ros2_robotiq_gripper
+
+          cd /tmp/ros2_ws
+          colcon build --packages-select \
+            bota_driver \
+            robotiq_description
+
+      - name: Export environment
+        run: |
+          source /opt/ros/${ROS_DISTRO}/setup.bash
+          source /tmp/ros2_ws/install/setup.bash
+
+          echo "PATH=/opt/ros/${ROS_DISTRO}/bin:${PATH}" >> $GITHUB_ENV
+          echo "AMENT_PREFIX_PATH=$AMENT_PREFIX_PATH" >> $GITHUB_ENV
+          echo "CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH" >> $GITHUB_ENV
+          echo "PYTHONPATH=$PYTHONPATH" >> $GITHUB_ENV
+          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Build and test
+        uses: jrl-umi3218/github-actions/build-cmake-project@master
+        with:
+          compiler: ${{ matrix.compiler }}
+          build-type: ${{ matrix.build-type }}
