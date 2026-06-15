@@ -3,11 +3,9 @@ name: ci
 on:
   workflow_dispatch:
   push:
-    branches:
-      - '**'
+    branches: ['**']
   pull_request:
-    branches:
-      - '**'
+    branches: ['**']
   schedule:
     - cron: '0 23 * * 0,1,4'
 
@@ -30,11 +28,19 @@ jobs:
         with:
           submodules: recursive
 
+      # ── Pre-commit ──
+      - name: Cache pre-commit
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+
       - name: Run pre-commit
         run: |
           pip install pre-commit
           pre-commit run --all-files
 
+      # ── ROS ──
       - name: Setup ROS
         run: |
           set -eux
@@ -55,6 +61,7 @@ jobs:
           sudo apt update
           sudo apt install -y ros-${ROS_DISTRO}-ros-base
 
+      # ── mc_rtc ──
       - name: Install mc_rtc
         run: |
           set -e
@@ -65,9 +72,19 @@ jobs:
           sudo apt install -y -qq \
             libmc-rtc-dev \
             ros-${ROS_DISTRO}-mc-rtc-plugin \
-            ros-${ROS_DISTRO}-xacro
+            ros-${ROS_DISTRO}-xacro \
+            clang-tidy
+
+      # ── ROS2 description packages (cached) ──
+      - name: Cache ROS2 workspace
+        id: cache-ros2
+        uses: actions/cache@v4
+        with:
+          path: /tmp/ros2_ws
+          key: ros2-ws-${{ hashFiles('.github/workflows/ci.yml') }}
 
       - name: Install ROS description packages
+        if: steps.cache-ros2.outputs.cache-hit != 'true'
         run: |
           set -e
           source /opt/ros/${ROS_DISTRO}/setup.bash
@@ -83,6 +100,7 @@ jobs:
             bota_driver \
             robotiq_description
 
+      # ── Environment ──
       - name: Export environment
         run: |
           source /opt/ros/${ROS_DISTRO}/setup.bash
@@ -94,6 +112,7 @@ jobs:
           echo "PYTHONPATH=$PYTHONPATH" >> $GITHUB_ENV
           echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
 
+      # ── Build & Test ──
       - name: Build and test
         uses: jrl-umi3218/github-actions/build-cmake-project@master
         with:
