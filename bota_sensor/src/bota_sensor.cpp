@@ -3,8 +3,7 @@
 
 #include <RBDyn/parsers/urdf.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace mc_robots
 {
@@ -13,7 +12,7 @@ BotaSensorRobotModule::BotaSensorRobotModule(const std::string & name) : mc_rbdy
 {
   bool fixed = false;
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));
-  rsdf_dir = (bfs::path(MC_RSDF_DIR) / name).string();
+  rsdf_dir = (fs::path(MC_RSDF_DIR) / name).string();
 
   _forceSensors.emplace_back() =
       mc_rbdyn::ForceSensor("BotaForceSensor", name + "_wrench", sva::PTransformd::Identity());

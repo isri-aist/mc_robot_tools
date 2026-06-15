@@ -3,8 +3,7 @@
 
 #include <RBDyn/parsers/urdf.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace mc_robots
 {
@@ -13,7 +12,7 @@ ScrewRobotModule::ScrewRobotModule(const std::string & name) : mc_rbdyn::RobotMo
 {
   bool fixed = false;
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));
-  rsdf_dir = (bfs::path(MC_RSDF_DIR) / name).string();
+  rsdf_dir = (fs::path(MC_RSDF_DIR) / name).string();
 }
 
 } // namespace mc_robots
