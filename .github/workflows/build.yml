@@ -28,18 +28,6 @@ jobs:
         with:
           submodules: recursive
 
-      # ── Pre-commit ──
-      - name: Cache pre-commit
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
-
-      - name: Run pre-commit
-        run: |
-          pip install pre-commit
-          pre-commit run --all-files
-
       # ── ROS ──
       - name: Setup ROS
         run: |
@@ -121,4 +109,5 @@ jobs:
 
       - name: Run clang-tidy
         run: |
+          pip install pre-commit
           pre-commit run clang-tidy --all-files --hook-stage manual
