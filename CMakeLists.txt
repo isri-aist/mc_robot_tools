@@ -14,27 +14,37 @@ project(
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(CTest)
 
+option(WITH_BOTA "Build bota_sensor module" OFF)
+option(WITH_DS4 "Build ds4 module" OFF)
+option(WITH_PLATE "Build plate module" OFF)
+option(WITH_REALSENSE "Build realsense_camera module" OFF)
+option(WITH_ROBOTIQ "Build robotiq_gripper" OFF)
+option(WITH_SCREW "Build screw module" OFF)
+
 find_package(mc_rtc REQUIRED)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/mc_rtc_macros.cmake)
 
-add_subdirectory(ds4)
-add_subdirectory(plate)
-add_subdirectory(screw)
-add_subdirectory(realsense_camera)
-
-find_package(bota_driver QUIET)
-if(bota_driver_FOUND)
-  message(STATUS "bota_driver found, building bota_sensor modules")
+if(WITH_BOTA)
   add_subdirectory(bota_sensor)
-else()
-  message(WARNING "bota_driver not found, skipping bota_sensor")
 endif()
 
-find_package(robotiq_description QUIET)
-if(robotiq_description_FOUND)
-  message(STATUS "robotiq_description found, building robotiq_gripper modules")
+if(WITH_DS4)
+  add_subdirectory(ds4)
+endif()
+
+if(WITH_PLATE)
+  add_subdirectory(plate)
+endif()
+
+if(WITH_REALSENSE)
+  add_subdirectory(realsense_camera)
+endif()
+
+if(WITH_ROBOTIQ)
   add_subdirectory(robotiq_gripper)
-else()
-  message(WARNING "robotiq_description not found, skipping robotiq_gripper")
+endif()
+
+if(WITH_SCREW)
+  add_subdirectory(screw)
 endif()

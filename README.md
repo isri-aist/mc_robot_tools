@@ -13,7 +13,15 @@ git clone https://github.com/isri-aist/mc_robot_tools.git
 cd mc_robot_tools
 mkdir -p build && cd build
 cmake ..
-make && sudo make install
+```
+Turn on appropriate options for your tool module.
+
+```sh
+ccmake ..
+# Turn on neccessary WITH_<module_name> options
+# [c] Configure > [e] Exit > [g] Generate
+make
+sudo make install
 ```
 
 ## Available Robots Tools
@@ -66,6 +74,8 @@ Tool modules generally fall into one of two implementation categories:
 - Self-contained: Modules that have no external dependencies.
 - ROS-dependent: Modules that rely on external ROS description packages for geometry and kinematics.
 
-If you want to add a new tool, use the existing modules as blueprints:
+If you want to add a new tool, use the existing modules as reference:
 - Self-contained examples: Check out the [ds4](ds4/), [plate](plate/), or [realsense_camera](realsense_camera/) directories.
 - ROS description examples: Check out the [bota_sensor](bota_sensor/) or [robotiq_gripper](robotiq_gripper/) directories.
+
+Robot modules can also be programmed with yaml. Check this [repository](https://github.com/mc-rtc/new-robot-module) for more details.

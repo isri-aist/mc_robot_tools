@@ -114,10 +114,19 @@ jobs:
 
       # ── Build & Test ──
       - name: Build and test
-        uses: jrl-umi3218/github-actions/build-cmake-project@master
-        with:
-          compiler: ${{ matrix.compiler }}
-          build-type: ${{ matrix.build-type }}
+        run: |
+          mkdir build && cd build
+          cmake .. \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
+            -DWITH_BOTA=ON \
+            -DWITH_DS4=ON \
+            -DWITH_PLATE=ON \
+            -DWITH_REALSENSE=ON \
+            -DWITH_ROBOTIQ=ON \
+            -DWITH_SCREW=ON
+          make -j$(nproc)
+          sudo make install
+          ctest --output-on-failure
 
       - name: Run clang-tidy
         run: |
