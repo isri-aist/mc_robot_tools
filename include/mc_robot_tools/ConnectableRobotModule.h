@@ -16,6 +16,10 @@ struct ConnectableRobotModule : public mc_rbdyn::RobotModule
 {
   using mc_rbdyn::RobotModule::RobotModule;
 
+  ConnectableRobotModule(const ConnectableRobotModule &) = default;
+  ConnectableRobotModule(ConnectableRobotModule &&) noexcept = default;
+  ConnectableRobotModule & operator=(const ConnectableRobotModule &) = default;
+  ConnectableRobotModule & operator=(ConnectableRobotModule &&) noexcept = default;
   virtual ~ConnectableRobotModule() = default;
 
   /** Frame on this module to be connected to the parent robot */
@@ -44,6 +48,7 @@ struct ConnectableRobotModule : public mc_rbdyn::RobotModule
  *  Ensures the correct address is freed when the static type is RobotModule*. */
 inline void destroyConnectableRobotModule(mc_rbdyn::RobotModule * ptr)
 {
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-static-cast-downcast,cppcoreguidelines-owning-memory)
   delete static_cast<ConnectableRobotModule *>(ptr);
 }
 
