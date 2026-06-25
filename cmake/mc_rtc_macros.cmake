@@ -243,3 +243,15 @@ macro(mc_rtc_finalize_package)
     add_subdirectory(tests)
   endif()
 endmacro()
+
+# ─────────────────────────────────────────────────────────────────────────────
+# add_connectable_robot(TARGET SRC HDR)
+#
+# Wraps mc_rtc's add_robot() and automatically links
+# mc_robot_tools::mc_robot_tools so the module can inherit from
+# ConnectableRobotModule.
+# ─────────────────────────────────────────────────────────────────────────────
+macro(add_connectable_robot TARGET SRC HDR)
+  add_robot(${TARGET} ${SRC} ${HDR})
+  target_link_libraries(${TARGET} PUBLIC mc_robot_tools)
+endmacro()
