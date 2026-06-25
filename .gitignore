@@ -2,5 +2,4 @@
 .cache
 build
 3rd-party
-
-wip
+CMakeFiles
