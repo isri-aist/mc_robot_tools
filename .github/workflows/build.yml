@@ -118,11 +118,11 @@ jobs:
           mkdir build && cd build
           cmake .. \
             -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
-            -DWITH_BOTA=ON \
+            -DWITH_BOTA_SENSOR=ON \
             -DWITH_DS4=ON \
             -DWITH_PLATE=ON \
-            -DWITH_REALSENSE=ON \
-            -DWITH_ROBOTIQ=ON \
+            -DWITH_REALSENSE_CAMERA=ON \
+            -DWITH_ROBOTIQ_GRIPPER=ON \
             -DWITH_SCREW=ON
           make -j$(nproc)
           sudo make install
