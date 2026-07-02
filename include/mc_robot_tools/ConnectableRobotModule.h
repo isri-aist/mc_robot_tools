@@ -45,7 +45,7 @@ struct ConnectableRobotModule : public mc_rbdyn::RobotModule
 };
 
 /** Helper for robot module .so destroy() functions.
- *  Ensures the correct address is freed when the static type is RobotModule*. */
+ *  Probably not necessary but nice to have. */
 inline void destroyConnectableRobotModule(mc_rbdyn::RobotModule * ptr)
 {
   // NOLINTNEXTLINE(cppcoreguidelines-pro-type-static-cast-downcast,cppcoreguidelines-owning-memory)
