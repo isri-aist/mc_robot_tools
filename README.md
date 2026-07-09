@@ -140,8 +140,8 @@ Each tool follows this layout:
 
 ##### 2. Implement the module
 
-- [ ] Update <new_tool>/src/<new_tool>.h:
-  - [ ] Update structure name to <NewTool>RobotModule
+- [ ] Update `<new_tool>/src/<new_tool>.h`:
+  - [ ] Update structure name to `<NewTool>RobotModule`
   - [ ] Declare the required override methods:
     ```cpp
     std::string baseFrame() const override;
@@ -153,16 +153,17 @@ Each tool follows this layout:
     - It is possible to conditionally register different subsets of modules by adjusting names dynamically at runtime. However, consider splitting them into multiple tool modules for simplicity if possible.
   - [ ] Update `create()` to return an instance of your new class for each supported name.
 
-- [ ] Update <new_tool>/src/<new_tool>.cpp:
+- [ ] Update `<new_tool>/src/<new_tool>.cpp`:
   - [ ] Constructor: call `ConnectableRobotModule(MC_DATA_PATH, name)` and initialize the URDF, and set `rsdf_dir`.
   - [ ] Implement the override methods declared in the header: `baseFrame()`, `wrenchFrame()`, `collisionLinks()`, `defaultMountingTransform()`.
 
 ##### 3. Add URDF / RSDF / meshes
-- [ ] Add the URDF (or xacro template) to <new_tool>/urdf/ (or <new_tool>/xacro/)
-- [ ] Add the RSDF file to <new_tool>/rsdf/<robot_name>.rsdf matching the URDF's link names
+- [ ] Add the URDF (or xacro template) to `<new_tool>/urdf/` (or `<new_tool>/xacro/`)
+- [ ] Add the RSDF file to `<new_tool>/rsdf/<robot_name>.rsdf` matching the URDF's link names
+  - Consider following this [tutorial](https://jrl-umi3218.github.io/mc_rtc/tutorials/advanced/new-environment.html#create-a-planar-surface) or using this [repository](https://github.com/isri-aist/rsdf_surface_exporter) export rsdf files.
 
 ##### 4. Update tests
-- [ ] Update `TEST_MODELS` in <new_tool>/tests/CMakeLists.txt with the exposed robot names
+- [ ] Update `TEST_MODELS` in `<new_tool>/tests/CMakeLists.txt` with the exposed robot names
 - [ ] Run ctest --verbose locally to verify the module loads without segfaults or unresolved frames
 
 ##### 5. Update CI
