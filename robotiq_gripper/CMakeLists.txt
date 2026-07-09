@@ -1,14 +1,24 @@
 cmake_minimum_required(VERSION 3.22)
 
 set(ROBOT_NAME robotiq_gripper)
-mc_rtc_setup_package(mc_${ROBOT_NAME} 1.0.0)
+
+project(
+  mc_${ROBOT_NAME}
+  LANGUAGES CXX
+  VERSION 1.0.0)
+
+set(CXX_DISABLE_WERROR 1)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+include(CTest)
+
+find_package(mc_rtc REQUIRED)
 
 find_description_package(robotiq_description REQUIRED)
 
 set(ROBOTIQ_GRIPPER_MODELS robotiq_2f_85_gripper robotiq_2f_140_gripper)
 
-mc_rtc_generate_urdf(
-  generate-robotiq-urdf XACRO_PATH "${CMAKE_CURRENT_SOURCE_DIR}/xacro" MODELS
-  ${ROBOTIQ_GRIPPER_MODELS})
+mc_rtc_generate_robot_description(MODELS ${ROBOTIQ_GRIPPER_MODELS})
 
-mc_rtc_finalize_package()
+mc_rtc_generate_robot_module()
