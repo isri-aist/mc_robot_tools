@@ -76,14 +76,14 @@ install(
 # Targets & Package Configuration
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Targets)
 
-set(CMake_INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
+set(INSTALL_DIRECTORY ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
 
-install(DIRECTORY cmake DESTINATION ${CMake_INSTALL_DESTINATION})
+install(DIRECTORY cmake DESTINATION ${INSTALL_DIRECTORY})
 
 install(
   EXPORT ${PROJECT_NAME}Targets
   FILE ${PROJECT_NAME}Targets.cmake
-  DESTINATION ${CMake_INSTALL_DESTINATION})
+  DESTINATION ${INSTALL_DIRECTORY})
 
 # Generate Config Files for find_package()
 file(
@@ -96,10 +96,10 @@ include(\"\${CMAKE_CURRENT_LIST_DIR}/cmake/mc_rtc_macros.cmake\")
 configure_package_config_file(
   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  INSTALL_DESTINATION ${CMake_INSTALL_DESTINATION})
+  INSTALL_DESTINATION ${INSTALL_DIRECTORY})
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-        DESTINATION ${CMake_INSTALL_DESTINATION})
+        DESTINATION ${INSTALL_DIRECTORY})
 
 # Subdirectory modules
 if(WITH_BOTA_SENSOR)
