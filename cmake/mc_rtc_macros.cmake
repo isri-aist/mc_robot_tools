@@ -2,7 +2,8 @@
 #
 # Reusable macros for building mc_rtc tool modules.
 #
-# Provides: mc_rtc_generate_robot_description(...) mc_rtc_generate_robot_module()
+# Provides: mc_rtc_generate_robot_description(...)
+# mc_rtc_generate_robot_module()
 #
 # Each tool module is a standard CMake project: write cmake_minimum_required(),
 # project(), find_package(mc_rtc REQUIRED), etc. directly in the module's
@@ -20,11 +21,10 @@
 # rsdf/ and meshes/ subfolders (whichever exist), and TARGET_NAME defaults to
 # "generate-<name of PARENT_PATH's folder>-urdf", so a module whose layout
 # follows the convention can call this with just MODELS. Passing PARENT_PATH
-# lets a module describe a robot living in another directory (this also
-# changes the default TARGET_NAME); passing any of
+# lets a module describe a robot living in another directory (this also changes
+# the default TARGET_NAME); passing any of
 # TARGET_NAME/XACRO_PATH/URDF_DIR/RSDF_DIR/MESHES explicitly overrides its
-# default (e.g. an XACRO_PATH pointing at an upstream ROS description
-# package).
+# default (e.g. an XACRO_PATH pointing at an upstream ROS description package).
 #
 # URDF generation strategies (auto-detected per model, in this order):
 #
@@ -45,8 +45,8 @@
 #
 # RSDF_DIR handling: if it contains a "*.rsdf.in" wrapper template, generate a
 # per-model rsdf from it (uses @MODEL@, @MODEL_LOWER@), installed to
-# ${MC_RSDF_DIR}/<model>/. Otherwise install it as a static directory, as-is,
-# to ${MC_RSDF_DIR}.
+# ${MC_RSDF_DIR}/<model>/. Otherwise install it as a static directory, as-is, to
+# ${MC_RSDF_DIR}.
 #
 # MESHES           - install meshes from this directory to ${MC_MESH_DIR}
 # LOWERCASE        - lowercase the output filenames
@@ -65,7 +65,8 @@ function(mc_rtc_generate_robot_description)
     ${ARGN})
 
   if(NOT _arg_MODELS)
-    message(FATAL_ERROR "mc_rtc_generate_robot_description(): MODELS is required")
+    message(
+      FATAL_ERROR "mc_rtc_generate_robot_description(): MODELS is required")
   endif()
 
   if(NOT _arg_PARENT_PATH)
@@ -119,11 +120,21 @@ function(mc_rtc_generate_robot_description)
   set(MC_RSDF_DIR "${MC_SHARE_DIR}/rsdf")
   set(MC_MESH_DIR "${MC_SHARE_DIR}/meshes")
   set(MC_DATA_PATH "${MC_SHARE_DIR}")
-  set(MC_SHARE_DIR "${MC_SHARE_DIR}" PARENT_SCOPE)
-  set(MC_URDF_DIR "${MC_URDF_DIR}" PARENT_SCOPE)
-  set(MC_RSDF_DIR "${MC_RSDF_DIR}" PARENT_SCOPE)
-  set(MC_MESH_DIR "${MC_MESH_DIR}" PARENT_SCOPE)
-  set(MC_DATA_PATH "${MC_DATA_PATH}" PARENT_SCOPE)
+  set(MC_SHARE_DIR
+      "${MC_SHARE_DIR}"
+      PARENT_SCOPE)
+  set(MC_URDF_DIR
+      "${MC_URDF_DIR}"
+      PARENT_SCOPE)
+  set(MC_RSDF_DIR
+      "${MC_RSDF_DIR}"
+      PARENT_SCOPE)
+  set(MC_MESH_DIR
+      "${MC_MESH_DIR}"
+      PARENT_SCOPE)
+  set(MC_DATA_PATH
+      "${MC_DATA_PATH}"
+      PARENT_SCOPE)
 
   # Collect xacro dependencies for rebuild tracking
   set(_XACRO_DEPS "")
