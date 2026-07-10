@@ -65,8 +65,8 @@ jobs:
       - name: Install mc_rtc
         run: |
           set -e
-
-          curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/head/setup.deb.sh' | sudo -E bash
+          curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/stable/setup.deb.sh' | sudo -E bash
+          sudo apt-get update
 
           sudo apt update
           sudo apt install -y -qq \
