@@ -1,7 +1,19 @@
 cmake_minimum_required(VERSION 3.22)
 
 set(ROBOT_NAME bota_sensor)
-mc_rtc_setup_package(mc_${ROBOT_NAME} 1.0.0)
+
+project(
+  mc_${ROBOT_NAME}
+  LANGUAGES CXX
+  VERSION 1.0.0)
+
+set(CXX_DISABLE_WERROR 1)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+include(CTest)
+
+find_package(mc_rtc REQUIRED)
 
 find_description_package(bota_driver REQUIRED)
 
@@ -28,16 +40,13 @@ set(BOTA_MODELS
     BFT_ROKS_ECAT_M8
     BFT_SENS_SER_M8)
 
-mc_rtc_generate_urdf(
-  generate-bota-urdf
+mc_rtc_generate_robot_description(
   XACRO_PATH
   "${BOTA_DRIVER_SHARE}/urdf"
   MODELS
   ${BOTA_MODELS}
   WRAPPER_TEMPLATE
   "${CMAKE_CURRENT_SOURCE_DIR}/xacro/wrapper.urdf.xacro.in"
-  RSDF_TEMPLATE
-  "${CMAKE_CURRENT_SOURCE_DIR}/rsdf/wrapper.rsdf.in"
   LOWERCASE)
 
-mc_rtc_finalize_package()
+mc_rtc_generate_robot_module()

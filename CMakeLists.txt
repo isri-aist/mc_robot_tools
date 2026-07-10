@@ -23,6 +23,7 @@ option(WITH_ROBOTIQ_GRIPPER "Build robotiq_gripper" OFF)
 option(WITH_SCREW "Build screw module" OFF)
 
 find_package(mc_rtc REQUIRED)
+find_program(XACRO xacro REQUIRED)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/mc_rtc_macros.cmake)
 
@@ -54,37 +55,51 @@ target_include_directories(
 
 target_link_libraries(${PROJECT_NAME} INTERFACE mc_rtc::mc_rbdyn)
 
-# Install source headers (from include/mc_robot_tools/)
-install(DIRECTORY include/${PROJECT_NAME}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+# ══════════════════════════════════════════════════════════════
+# Installation & Export Configuration
+# ══════════════════════════════════════════════════════════════
 
-# ⭐ ADDED: install the generated header separately
+include(CMakePackageConfigHelpers)
+
+# Public Headers
+install(
+  DIRECTORY include/${PROJECT_NAME}
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  FILES_MATCHING
+  PATTERN "*.h"
+  PATTERN "*.in.h" EXCLUDE)
+
 install(
   FILES ${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME}/mc_robot_tools.h
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 
+# Targets & Package Configuration
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Targets)
+
+set(INSTALL_DIRECTORY ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
+
+install(DIRECTORY cmake DESTINATION ${INSTALL_DIRECTORY})
 
 install(
   EXPORT ${PROJECT_NAME}Targets
   FILE ${PROJECT_NAME}Targets.cmake
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
+  DESTINATION ${INSTALL_DIRECTORY})
 
-include(CMakePackageConfigHelpers)
-
+# Generate Config Files for find_package()
 file(
   WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake.in"
   "@PACKAGE_INIT@
 include(\"\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}Targets.cmake\")
+include(\"\${CMAKE_CURRENT_LIST_DIR}/cmake/mc_rtc_macros.cmake\")
 ")
 
 configure_package_config_file(
   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
+  INSTALL_DESTINATION ${INSTALL_DIRECTORY})
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
+        DESTINATION ${INSTALL_DIRECTORY})
 
 # Subdirectory modules
 if(WITH_BOTA_SENSOR)

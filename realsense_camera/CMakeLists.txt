@@ -1,17 +1,22 @@
 cmake_minimum_required(VERSION 3.22)
 
 set(ROBOT_NAME realsense_camera)
-mc_rtc_setup_package(mc_${ROBOT_NAME} 1.0.0)
+
+project(
+  mc_${ROBOT_NAME}
+  LANGUAGES CXX
+  VERSION 1.0.0)
+
+set(CXX_DISABLE_WERROR 1)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+include(CTest)
+
+find_package(mc_rtc REQUIRED)
 
 set(REALSENSE_MODELS realsense_d435)
 
-mc_rtc_generate_urdf(
-  generate-${PROJECT_NAME}-urdf
-  TEMPLATE_DIR
-  "${CMAKE_CURRENT_SOURCE_DIR}/urdf"
-  MODELS
-  ${REALSENSE_MODELS}
-  MESHES
-  "${CMAKE_CURRENT_SOURCE_DIR}/meshes")
+mc_rtc_generate_robot_description(MODELS ${REALSENSE_MODELS})
 
-mc_rtc_finalize_package()
+mc_rtc_generate_robot_module()
