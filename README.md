@@ -184,8 +184,8 @@ Each tool follows this layout:
   - [ ] Update `create()` to return an instance of your new class for each supported name.
 
 - [ ] Update `<new_tool>/src/<new_tool>.cpp`:
-  - [ ] Constructor: call `ConnectableRobotModule(MC_DATA_PATH, name)` and initialize the URDF, and set `rsdf_dir`.
-  - [ ] Implement the override methods declared in the header: `baseFrame()`, `wrenchFrame()`, `collisionLinks()`, `defaultMountingTransform()`.
+  - [ ] Initialize the URDF, and set `rsdf_dir`.
+  - [ ] Set up `_baseFrame`, `_mountFrame`, `_collisionLinks`, `_defaultMountingTransform` if applicable.
 
 ##### 3. Add URDF / RSDF / meshes
 - [ ] Add the URDF (or xacro template) to `<new_tool>/urdf/` (or `<new_tool>/xacro/`)
