@@ -43,7 +43,7 @@ configure_file(
   ${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME}/mc_robot_tools.h @ONLY)
 
 # ══════════════════════════════════════════════════════════════
-# Library for ConnectableRobotModule
+# Header-only expose available_tools helpers
 # ══════════════════════════════════════════════════════════════
 add_library(${PROJECT_NAME} INTERFACE)
 
