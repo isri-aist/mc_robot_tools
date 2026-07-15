@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ssg48_gripper">
+    <xacro:include filename="$(find ssg48_gripper_description)/urdf/ssg48_gripper.urdf" />
+</robot>
