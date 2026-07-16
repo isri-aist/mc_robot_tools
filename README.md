@@ -149,6 +149,10 @@ Each tool follows this layout:
     add_subdirectory(<new_tool>)
   endif()
   ```
+- [ ] Add the corresponding conversion in the top-level `CMakeLists.txt`:
+  ```cmake
+  foreach(opt ... <NEW_TOOL>)
+  ```
 - [ ] Add the tool to the CMake-generated header include/mc_robot_tools/mc_robot_tools.in.h:
   ```cpp
   inline std::vector<std::string> list<NewTool>()
@@ -162,10 +166,6 @@ Each tool follows this layout:
     }
     return {};
   }
-  ```
-- [ ] Add the corresponding conversion in the top-level CMakeLists' foreach:
-  ```cmake
-  foreach(opt ... <NEW_TOOL>)
   ```
 
 ##### 2. Implement the module
