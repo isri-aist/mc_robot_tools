@@ -1,7 +1,5 @@
 #pragma once
 
-#include <mc_robot_tools/ConnectableRobotModule.h>
-
 #include <mc_rbdyn/RobotModuleMacros.h>
 #include <mc_robots/api.h>
 #include <mc_rtc/logging.h>
@@ -9,13 +7,9 @@
 namespace mc_robots
 {
 
-struct MC_ROBOTS_DLLAPI RobotiqGripperRobotModule : public mc_robot_tools::ConnectableRobotModule
+struct MC_ROBOTS_DLLAPI RobotiqGripperRobotModule : public mc_rbdyn::RobotModule
 {
   RobotiqGripperRobotModule(const std::string & name);
-
-  std::string baseFrame() const override;
-  std::vector<std::string> collisionLinks() const override;
-  sva::PTransformd defaultMountingTransform() const override;
 
 private:
   std::string prefix_;
@@ -32,7 +26,7 @@ extern "C"
 
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
   {
-    mc_robot_tools::destroyConnectableRobotModule(ptr);
+    delete ptr;
   }
 
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & n)

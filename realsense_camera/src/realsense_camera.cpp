@@ -10,31 +10,16 @@ namespace mc_robots
 {
 
 RealSenseCameraRobotModule::RealSenseCameraRobotModule(const std::string & name)
-: mc_robot_tools::ConnectableRobotModule(MC_DATA_PATH, name)
+: mc_rbdyn::RobotModule(MC_DATA_PATH, name)
 {
   bool fixed = false;
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));
   rsdf_dir = (fs::path(MC_RSDF_DIR) / name).string();
-}
 
-std::string RealSenseCameraRobotModule::baseFrame() const
-{
-  return "realsense_d435_base_link";
-}
-
-std::string RealSenseCameraRobotModule::wrenchFrame() const
-{
-  return "realsense_d435_wrench_link";
-}
-
-std::vector<std::string> RealSenseCameraRobotModule::collisionLinks() const
-{
-  return {"realsense_d435_bracket_link", "realsense_d435_camera_link"};
-}
-
-sva::PTransformd RealSenseCameraRobotModule::defaultMountingTransform() const
-{
-  return sva::PTransformd::Identity(); // no rotation needed for camera
+  _baseFrame = "realsense_d435_base_link";
+  _mountFrame = "realsense_d435_wrench_link";
+  _collisionLinks = {"realsense_d435_bracket_link", "realsense_d435_camera_link"};
+  _defaultMountingTransform = sva::PTransformd::Identity();
 }
 
 } // namespace mc_robots

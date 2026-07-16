@@ -274,8 +274,8 @@ endfunction()
 # exist.
 #
 # A robot module can be implemented either as a C++ module (src/, built with
-# add_connectable_robot() / add_robot()) or as a YAML module (yaml/, no C++
-# involved — see https://github.com/mc-rtc/new-robot-module/ for the expected
+# add_robot()) or as a YAML module (yaml/, no C++ involved — see
+# https://github.com/mc-rtc/new-robot-module/ for the expected
 # yaml/CMakeLists.txt layout: configure_file() the robot description onto
 # ${MC_SHARE_DIR}, then configure_file() + install() an alias entry to
 # ${MC_ROBOTS_ALIASES_DIRECTORY}). Both may coexist in the same module.
@@ -293,16 +293,4 @@ macro(mc_rtc_generate_robot_module)
                        "${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt")
     add_subdirectory(tests)
   endif()
-endmacro()
-
-# ─────────────────────────────────────────────────────────────────────────────
-# add_connectable_robot(TARGET SRC HDR)
-#
-# Wraps mc_rtc's add_robot() and automatically links
-# mc_robot_tools::mc_robot_tools so the module can inherit from
-# ConnectableRobotModule.
-# ─────────────────────────────────────────────────────────────────────────────
-macro(add_connectable_robot TARGET SRC HDR)
-  add_robot(${TARGET} ${SRC} ${HDR})
-  target_link_libraries(${TARGET} PUBLIC mc_robot_tools)
 endmacro()
