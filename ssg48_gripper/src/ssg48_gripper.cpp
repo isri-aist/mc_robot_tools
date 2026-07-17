@@ -24,12 +24,12 @@ std::string SSG48GripperRobotModule::baseFrame() const
 
 std::vector<std::string> SSG48GripperRobotModule::collisionLinks() const
 {
-  return {"gripper_base_link", "left_gripper_finger_link", "right_gripper_finger_link", "right_gripper_finger"};
+  return {"gripper_base_link", "left_gripper_finger", "right_gripper_finger"};
 }
 
 sva::PTransformd SSG48GripperRobotModule::defaultMountingTransform() const
 {
-  return {sva::RotZ(M_PI)};
+  return sva::PTransformd::Identity();
 }
 
 } // namespace mc_robots
