@@ -35,6 +35,7 @@ sudo make install
 |**realsense_camera**|None|
 |**robotiq_gripper**|[ros2_robotiq_gripper/robotiq_description](https://github.com/PickNikRobotics/ros2_robotiq_gripper/tree/main/robotiq_description)|
 |**screw**|None|
+|**ssg48_gripper**|[ssg48_adaptive_electric_gripper_ros2/ssg48_gripper_description](https://github.com/Lass6230/ssg48_adaptive_electric_gripper_ros2/tree/main/ssg48_gripper_description)|
 
 ## Usage
 
@@ -197,8 +198,8 @@ Each tool follows this layout:
 - [ ] Run ctest --verbose locally to verify the module loads without segfaults or unresolved frames
 
 ##### 5. Update CI
-- [ ] Add `WITH_<NEW_TOOL>` option to step "Build and test" in `.github/workflows/build.yml`.
-  - Add ROS dependency to step "Install ROS description packages" if necessary.
+- [ ] Add `-DWITH_<NEW_TOOL>=ON` to the `options` of the "Build and test" step in `.github/workflows/build.yml`.
+  - If the tool needs a ROS description package: install it from apt via the `ros:` `apt:` list of the "Install dependencies" step when it is released to the ROS index, otherwise add its repository to the "Build ROS description packages" step (`git clone` + `--packages-select`).
 
 ##### 6. Documentation
 - [ ] Update this README with the new tool name, dependencies, any notable configuration options.
