@@ -39,7 +39,7 @@ jobs:
                 cloudsmith: mc-rtc/head
             apt: libmc-rtc-dev clang-tidy
           ros: |
-            apt: ros-base mc-rtc-plugin xacro robotiq-description
+            apt: ros-base mc-rtc-plugin xacro
 
       # ── Pre-commit (clang-format, cmake-format, ...) ──
       - name: Cache pre-commit
@@ -61,11 +61,12 @@ jobs:
           mkdir -p "${GITHUB_WORKSPACE}/description_ws/src"
           cd "${GITHUB_WORKSPACE}/description_ws/src"
           git clone --depth 1 https://gitlab.com/botasys/drivers/bota_driver_ros2
+          git clone --depth 1 https://github.com/PickNikRobotics/ros2_robotiq_gripper
           git clone --depth 1 https://github.com/Lass6230/ssg48_adaptive_electric_gripper_ros2
 
           cd "${GITHUB_WORKSPACE}/description_ws"
           colcon build --merge-install \
-            --packages-select bota_driver ssg48_gripper_description \
+            --packages-select bota_driver robotiq_description ssg48_gripper_description \
             --cmake-args -DBUILD_NODES=OFF -DBUILD_TESTING=OFF
 
           # Expose the overlay to `build-cmake-project` and the ctest it runs.
