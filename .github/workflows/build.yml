@@ -55,7 +55,7 @@ jobs:
 
       - name: Build ROS description packages
         run: |
-          set -eux
+          set -ex
           source "/opt/ros/${ROS_DISTRO:-humble}/setup.bash"
 
           mkdir -p "${GITHUB_WORKSPACE}/description_ws/src"
