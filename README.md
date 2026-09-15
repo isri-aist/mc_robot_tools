@@ -33,7 +33,7 @@ sudo make install
 |**ds4**|None|
 |**plate**|None|
 |**realsense_camera**|None|
-|**robotiq_gripper**|[ros2_robotiq_gripper/robotiq_description](https://github.com/PickNikRobotics/ros2_robotiq_gripper/tree/main/robotiq_description)|
+|**robotiq_gripper**|[ros2_robotiq_gripper/robotiq_description](https://github.com/PickNikRobotics/ros2_robotiq_gripper/tree/main/robotiq_description)<br>[robotiq_hande_description](https://github.com/macmacal/robotiq_hande_description/tree/humble-devel)|
 |**screw**|None|
 
 ## Usage
