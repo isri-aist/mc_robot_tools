@@ -27,7 +27,7 @@ extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names) // NOLINT(readability-identifier-naming)
   {
-    names = {"Robotiq2f85Gripper", "Robotiq2f140Gripper"};
+    names = {"Robotiq2f85Gripper", "Robotiq2f140Gripper", "RobotiqHandEGripper"};
   }
 
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
@@ -46,6 +46,10 @@ extern "C"
     if(n == "Robotiq2f140Gripper")
     {
       return new mc_robots::RobotiqGripperRobotModule("robotiq_2f_140_gripper");
+    }
+    if(n == "RobotiqHandEGripper")
+    {
+      return new mc_robots::RobotiqGripperRobotModule("robotiq_hande_gripper");
     }
 
     mc_rtc::log::error("RobotiqGripper module cannot create an object of type {}", n);

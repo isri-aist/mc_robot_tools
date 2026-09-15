@@ -11,7 +11,7 @@ namespace mc_robots
 
 RobotiqGripperRobotModule::RobotiqGripperRobotModule(const std::string & name)
 : mc_robot_tools::ConnectableRobotModule(MC_DATA_PATH, name),
-  prefix_(name.find("85") != std::string::npos ? "robotiq_85" : "robotiq_140")
+  prefix_(name.find("85") != std::string::npos ? "robotiq_85" : "robotiq_140" ; "robotiq_hande")
 {
   bool fixed = false;
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));
