@@ -19,7 +19,8 @@ find_description_package(robotiq_description REQUIRED)
 
 find_description_package(robotiq_hande_description REQUIRED)
 
-set(ROBOTIQ_GRIPPER_MODELS robotiq_2f_85_gripper robotiq_2f_140_gripper robotiq_hande_gripper)
+set(ROBOTIQ_GRIPPER_MODELS robotiq_2f_85_gripper robotiq_2f_140_gripper
+                           robotiq_hande_gripper)
 
 mc_rtc_generate_robot_description(MODELS ${ROBOTIQ_GRIPPER_MODELS})
 
