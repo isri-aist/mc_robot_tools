@@ -19,6 +19,7 @@ struct MC_ROBOTS_DLLAPI RobotiqGripperRobotModule : public mc_robot_tools::Conne
 
 private:
   std::string prefix_;
+  static std::string getPrefixFromName(const std::string & name);
 };
 
 } // namespace mc_robots

@@ -1,4 +1,4 @@
-set(TEST_MODELS "Robotiq2f85Gripper" "Robotiq2f140Gripper")
+set(TEST_MODELS "Robotiq2f85Gripper" "Robotiq2f140Gripper" "RobotiqHandEGripper")
 
 if(TARGET ${PROJECT_NAME})
   foreach(MODEL ${TEST_MODELS})

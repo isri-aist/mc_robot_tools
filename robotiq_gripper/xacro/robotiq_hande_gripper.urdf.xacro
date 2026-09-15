@@ -9,15 +9,19 @@
     <xacro:arg name="stop_bit" default="1" />
     <xacro:arg name="slave_id" default="9" />
     <xacro:arg name="frequency_hz" default="10" />
+    <xacro:arg name="grip_pos_min" default="0" />
+    <xacro:arg name="grip_pos_max" default="0.025" />
+    <xacro:arg name="xyz" default="0 0 0" />
+    <xacro:arg name="rpy" default="0 0 0" />
 
     <!-- Import macros -->
     <xacro:include filename="$(find robotiq_hande_description)/urdf/robotiq_hande_gripper.xacro" />
 
     <link name="robotiq_hande_origin" />
-    <xacro:robotiq_gripper name="RobotiqGripperHardwareInterface" prefix=""
+    <xacro:robotiq_hande_gripper name="RobotiqGripperHardwareInterface" prefix=""
         parent="robotiq_hande_origin"
-        grip_pos_min="0"
-        grip_pos_max="0.025"
+        grip_pos_min="$(arg grip_pos_min)"
+        grip_pos_max="$(arg grip_pos_max)"
         tty_port="$(arg com_port)"
         baudrate="$(arg baudrate)"
         parity="$(arg parity)"
@@ -25,7 +29,8 @@
         stop_bit="$(arg stop_bit)"
         slave_id="$(arg slave_id)"
         use_fake_hardware="$(arg use_fake_hardware)"
-        frequency_hz="$(arg frequency_hz)">
-        <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:robotiq_gripper>
+        frequency_hz="$(arg frequency_hz)"
+        xyz="$(arg xyz)"
+        rpy="$(arg rpy)">
+    </xacro:robotiq_hande_gripper>
 </robot>
