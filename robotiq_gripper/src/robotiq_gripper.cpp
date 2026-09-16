@@ -23,10 +23,6 @@ std::string RobotiqGripperRobotModule::getPrefixFromName(const std::string & nam
   {
     return "robotiq_85";
   }
-  if(name.find("hande") != std::string::npos)
-  {
-    return "robotiq_hande";
-  }
   return "robotiq_140";
 }
 

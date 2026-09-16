@@ -54,7 +54,16 @@ inline std::vector<std::string> listRobotiqGripper()
   // clang-format off
   const bool WITH_ROBOTIQ_GRIPPER_BOOL = @WITH_ROBOTIQ_GRIPPER_BOOL@;
   // clang-format on
-  if(WITH_ROBOTIQ_GRIPPER_BOOL) return {"Robotiq2f85Gripper", "Robotiq2f140Gripper", "RobotiqHandEGripper"};
+  if(WITH_ROBOTIQ_GRIPPER_BOOL) return {"Robotiq2f85Gripper", "Robotiq2f140Gripper"};
+  return {};
+}
+
+inline std::vector<std::string> listRobotiqHandE()
+{
+  // clang-format off
+  const bool WITH_ROBOTIQ_HANDE_BOOL = @WITH_ROBOTIQ_HANDE_BOOL@;
+  // clang-format on
+  if(WITH_ROBOTIQ_HANDE_BOOL) return {"RobotiqHandEGripper"};
   return {};
 }
 

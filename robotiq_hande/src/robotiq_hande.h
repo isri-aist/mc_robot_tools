@@ -9,17 +9,13 @@
 namespace mc_robots
 {
 
-struct MC_ROBOTS_DLLAPI RobotiqGripperRobotModule : public mc_robot_tools::ConnectableRobotModule
+struct MC_ROBOTS_DLLAPI RobotiqHandERobotModule : public mc_robot_tools::ConnectableRobotModule
 {
-  RobotiqGripperRobotModule(const std::string & name);
+  RobotiqHandERobotModule(const std::string & name);
 
   std::string baseFrame() const override;
   std::vector<std::string> collisionLinks() const override;
   sva::PTransformd defaultMountingTransform() const override;
-
-private:
-  std::string prefix_;
-  static std::string getPrefixFromName(const std::string & name);
 };
 
 } // namespace mc_robots
@@ -28,7 +24,7 @@ extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names) // NOLINT(readability-identifier-naming)
   {
-    names = {"Robotiq2f85Gripper", "Robotiq2f140Gripper"};
+    names = {"RobotiqHandEGripper"};
   }
 
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
@@ -38,18 +34,14 @@ extern "C"
 
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & n)
   {
-    ROBOT_MODULE_CHECK_VERSION("RobotiqGripper")
+    ROBOT_MODULE_CHECK_VERSION("RobotiqHandE")
 
-    if(n == "Robotiq2f85Gripper")
+    if(n == "RobotiqHandEGripper")
     {
-      return new mc_robots::RobotiqGripperRobotModule("robotiq_2f_85_gripper");
-    }
-    if(n == "Robotiq2f140Gripper")
-    {
-      return new mc_robots::RobotiqGripperRobotModule("robotiq_2f_140_gripper");
+      return new mc_robots::RobotiqHandERobotModule("robotiq_hande_gripper");
     }
 
-    mc_rtc::log::error("RobotiqGripper module cannot create an object of type {}", n);
+    mc_rtc::log::error("RobotiqHandE module cannot create an object of type {}", n);
     return nullptr;
   }
 }

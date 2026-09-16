@@ -20,6 +20,7 @@ option(WITH_DS4 "Build ds4 module" OFF)
 option(WITH_PLATE "Build plate module" OFF)
 option(WITH_REALSENSE_CAMERA "Build realsense_camera module" OFF)
 option(WITH_ROBOTIQ_GRIPPER "Build robotiq_gripper" OFF)
+option(WITH_ROBOTIQ_HANDE "Build robotiq_hande" OFF)
 option(WITH_SCREW "Build screw module" OFF)
 
 find_package(mc_rtc REQUIRED)
@@ -30,7 +31,15 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/mc_rtc_macros.cmake)
 # ══════════════════════════════════════════════════════════════
 # Generate mc_robot_tools.h from template
 # ══════════════════════════════════════════════════════════════
-foreach(opt BOTA_SENSOR DS4 PLATE REALSENSE_CAMERA ROBOTIQ_GRIPPER SCREW)
+foreach(
+  opt
+  BOTA_SENSOR
+  DS4
+  PLATE
+  REALSENSE_CAMERA
+  ROBOTIQ_GRIPPER
+  ROBOTIQ_HANDE
+  SCREW)
   if(WITH_${opt})
     set(WITH_${opt}_BOOL "true")
   else()
@@ -120,6 +129,10 @@ endif()
 
 if(WITH_ROBOTIQ_GRIPPER)
   add_subdirectory(robotiq_gripper)
+endif()
+
+if(WITH_ROBOTIQ_HANDE)
+  add_subdirectory(robotiq_hande)
 endif()
 
 if(WITH_SCREW)
