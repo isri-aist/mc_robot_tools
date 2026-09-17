@@ -10,12 +10,20 @@ namespace mc_robots
 {
 
 RobotiqGripperRobotModule::RobotiqGripperRobotModule(const std::string & name)
-: mc_robot_tools::ConnectableRobotModule(MC_DATA_PATH, name),
-  prefix_(name.find("85") != std::string::npos ? "robotiq_85" : "robotiq_140")
+: mc_robot_tools::ConnectableRobotModule(MC_DATA_PATH, name), prefix_(getPrefixFromName(name))
 {
   bool fixed = false;
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));
   rsdf_dir = (fs::path(MC_RSDF_DIR) / name).string();
+}
+
+std::string RobotiqGripperRobotModule::getPrefixFromName(const std::string & name)
+{
+  if(name.find("85") != std::string::npos)
+  {
+    return "robotiq_85";
+  }
+  return "robotiq_140";
 }
 
 std::string RobotiqGripperRobotModule::baseFrame() const

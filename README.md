@@ -10,6 +10,20 @@ Prerequisite: [mc_rtc](https://jrl-umi3218.github.io/mc_rtc) must already be ins
 
 ```sh
 git clone https://github.com/isri-aist/mc_robot_tools.git
+```
+
+Some tools depend on an external ROS description package for their geometry (see [Available Robot Tools](#available-robot-tools)). Fetch and build the ones you need with [vcstool](https://github.com/dirk-thomas/vcstool) and `colcon`, then source the resulting workspace so `find_package()` can locate them:
+
+```sh
+mkdir -p ros2_ws/src
+vcs import --input mc_robot_tools/dependencies.repos ros2_ws/src
+cd ros2_ws
+colcon build
+source install/setup.bash
+cd ..
+```
+
+```sh
 cd mc_robot_tools
 mkdir -p build && cd build
 cmake ..
@@ -34,6 +48,7 @@ sudo make install
 |**plate**|None|
 |**realsense_camera**|None|
 |**robotiq_gripper**|[ros2_robotiq_gripper/robotiq_description](https://github.com/PickNikRobotics/ros2_robotiq_gripper/tree/main/robotiq_description)|
+|**robotiq_hande**|[robotiq_hande_description](https://github.com/macmacal/robotiq_hande_description/tree/humble-devel)|
 |**screw**|None|
 
 ## Usage
@@ -79,7 +94,7 @@ Every tool module falls into one of two categories (see the [table above](#avail
 
 If you want to add a new tool, use the existing modules as reference:
 - Self-contained examples: Check out the [ds4](ds4/), [plate](plate/), or [realsense_camera](realsense_camera/) directories.
-- ROS description examples: Check out the [bota_sensor](bota_sensor/) or [robotiq_gripper](robotiq_gripper/) directories.
+- ROS description examples: Check out the [bota_sensor](bota_sensor/), [robotiq_gripper](robotiq_gripper/), [robotiq_hande](robotiq_hande/) directories.
 
 #### How module generation works
 
@@ -198,7 +213,7 @@ Each tool follows this layout:
 
 ##### 5. Update CI
 - [ ] Add `WITH_<NEW_TOOL>` option to step "Build and test" in `.github/workflows/build.yml`.
-  - Add ROS dependency to step "Install ROS description packages" if necessary.
+  - If the tool needs a ROS description package: add it to [dependencies.repos](dependencies.repos) and to the `--packages-select` list in the "Install ROS description packages" step.
 
 ##### 6. Documentation
 - [ ] Update this README with the new tool name, dependencies, any notable configuration options.

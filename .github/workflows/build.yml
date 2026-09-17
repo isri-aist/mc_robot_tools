@@ -81,24 +81,23 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /tmp/ros2_ws
-          key: ros2-ws-${{ hashFiles('.github/workflows/ci.yml') }}
+          key: ros2-ws-${{ hashFiles('dependencies.repos') }}
 
       - name: Install ROS description packages
         if: steps.cache-ros2.outputs.cache-hit != 'true'
         run: |
           set -e
           source /opt/ros/${ROS_DISTRO}/setup.bash
-          sudo apt install -y python3-colcon-common-extensions
+          sudo apt install -y python3-colcon-common-extensions python3-vcstool
 
           mkdir -p /tmp/ros2_ws/src
-          cd /tmp/ros2_ws/src
-          git clone --depth 1 https://gitlab.com/botasys/drivers/bota_driver_ros2
-          git clone --depth 1 https://github.com/PickNikRobotics/ros2_robotiq_gripper
+          vcs import --shallow --input dependencies.repos /tmp/ros2_ws/src
 
           cd /tmp/ros2_ws
           colcon build --packages-select \
             bota_driver \
-            robotiq_description
+            robotiq_description \
+            robotiq_hande_description
 
       # ── Environment ──
       - name: Export environment
@@ -123,6 +122,7 @@ jobs:
             -DWITH_PLATE=ON \
             -DWITH_REALSENSE_CAMERA=ON \
             -DWITH_ROBOTIQ_GRIPPER=ON \
+            -DWITH_ROBOTIQ_HANDE=ON \
             -DWITH_SCREW=ON
           make -j$(nproc)
           sudo make install
