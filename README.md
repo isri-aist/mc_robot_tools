@@ -47,7 +47,8 @@ sudo make install
 |**ds4**|None|
 |**plate**|None|
 |**realsense_camera**|None|
-|**robotiq_gripper**|[ros2_robotiq_gripper/robotiq_description](https://github.com/PickNikRobotics/ros2_robotiq_gripper/tree/main/robotiq_description)<br>[robotiq_hande_description](https://github.com/macmacal/robotiq_hande_description/tree/humble-devel)|
+|**robotiq_gripper**|[ros2_robotiq_gripper/robotiq_description](https://github.com/PickNikRobotics/ros2_robotiq_gripper/tree/main/robotiq_description)|
+|**robotiq_hande**|[robotiq_hande_description](https://github.com/macmacal/robotiq_hande_description/tree/humble-devel)|
 |**screw**|None|
 
 ## Usage
@@ -93,7 +94,7 @@ Every tool module falls into one of two categories (see the [table above](#avail
 
 If you want to add a new tool, use the existing modules as reference:
 - Self-contained examples: Check out the [ds4](ds4/), [plate](plate/), or [realsense_camera](realsense_camera/) directories.
-- ROS description examples: Check out the [bota_sensor](bota_sensor/) or [robotiq_gripper](robotiq_gripper/) directories.
+- ROS description examples: Check out the [bota_sensor](bota_sensor/), [robotiq_gripper](robotiq_gripper/), [robotiq_hande](robotiq_hande/) directories.
 
 #### How module generation works
 
