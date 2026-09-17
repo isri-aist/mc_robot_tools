@@ -19,16 +19,29 @@ jobs:
         build-type: [RelWithDebInfo]
         compiler: [gcc]
 
-    env:
-      ROS_DISTRO: humble
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: recursive
 
-      # ── Pre-commit ──
+      - name: Install dependencies
+        uses: jrl-umi3218/github-actions/install-dependencies@master
+        with:
+          compiler: ${{ matrix.compiler }}
+          build-type: ${{ matrix.build-type }}
+          ubuntu: |
+            apt-mirrors:
+              ros:
+                mirror: http://packages.ros.org/ros2/ubuntu
+                key-uri: https://raw.githubusercontent.com/ros/rosdistro/master/ros.key
+              mc-rtc:
+                cloudsmith: mc-rtc/head
+            apt: libmc-rtc-dev clang-tidy
+          ros: |
+            apt: ros-base mc-rtc-plugin xacro
+
+      # ── Pre-commit (clang-format, cmake-format, ...) ──
       - name: Cache pre-commit
         uses: actions/cache@v4
         with:
@@ -40,10 +53,10 @@ jobs:
           pip install pre-commit
           pre-commit run --all-files
 
-      # ── ROS ──
-      - name: Setup ROS
+      - name: Build ROS description packages
         run: |
-          set -eux
+          set -ex
+          source "/opt/ros/${ROS_DISTRO:-humble}/setup.bash"
 
           sudo apt update
           sudo apt install -y curl gnupg2 lsb-release ca-certificates
@@ -81,52 +94,46 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /tmp/ros2_ws
-          key: ros2-ws-${{ hashFiles('.github/workflows/ci.yml') }}
+          key: ros2-ws-${{ hashFiles('dependencies.repos') }}
 
       - name: Install ROS description packages
         if: steps.cache-ros2.outputs.cache-hit != 'true'
         run: |
           set -e
           source /opt/ros/${ROS_DISTRO}/setup.bash
-          sudo apt install -y python3-colcon-common-extensions
+          sudo apt install -y python3-colcon-common-extensions python3-vcstool
 
           mkdir -p /tmp/ros2_ws/src
-          cd /tmp/ros2_ws/src
-          git clone --depth 1 https://gitlab.com/botasys/drivers/bota_driver_ros2
-          git clone --depth 1 https://github.com/PickNikRobotics/ros2_robotiq_gripper
+          vcs import --shallow --input dependencies.repos /tmp/ros2_ws/src
 
           cd /tmp/ros2_ws
           colcon build --packages-select \
             bota_driver \
-            robotiq_description
+            robotiq_description \
+            robotiq_hande_description
 
-      # ── Environment ──
-      - name: Export environment
-        run: |
-          source /opt/ros/${ROS_DISTRO}/setup.bash
-          source /tmp/ros2_ws/install/setup.bash
+          # Expose the overlay to `build-cmake-project` and the ctest it runs.
+          . install/setup.bash
+          {
+            echo "AMENT_PREFIX_PATH=${AMENT_PREFIX_PATH}"
+            echo "CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH:-}"
+            echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}"
+          } >> "${GITHUB_ENV}"
 
-          echo "PATH=/opt/ros/${ROS_DISTRO}/bin:${PATH}" >> $GITHUB_ENV
-          echo "AMENT_PREFIX_PATH=$AMENT_PREFIX_PATH" >> $GITHUB_ENV
-          echo "CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH" >> $GITHUB_ENV
-          echo "PYTHONPATH=$PYTHONPATH" >> $GITHUB_ENV
-          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
-
-      # ── Build & Test ──
+      # ── Build & test ──
       - name: Build and test
-        run: |
-          mkdir build && cd build
-          cmake .. \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
-            -DWITH_BOTA_SENSOR=ON \
-            -DWITH_DS4=ON \
-            -DWITH_PLATE=ON \
-            -DWITH_REALSENSE_CAMERA=ON \
-            -DWITH_ROBOTIQ_GRIPPER=ON \
+        uses: jrl-umi3218/github-actions/build-cmake-project@master
+        with:
+          compiler: ${{ matrix.compiler }}
+          build-type: ${{ matrix.build-type }}
+          options: >-
+            -DWITH_BOTA_SENSOR=ON
+            -DWITH_DS4=ON
+            -DWITH_PLATE=ON
+            -DWITH_REALSENSE_CAMERA=ON
+            -DWITH_ROBOTIQ_GRIPPER=ON
             -DWITH_SCREW=ON
-          make -j$(nproc)
-          sudo make install
-          ctest --output-on-failure
+            -DWITH_SSG48_GRIPPER=ON
 
       - name: Run clang-tidy
         run: |

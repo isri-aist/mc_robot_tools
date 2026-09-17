@@ -11,6 +11,42 @@
 #
 
 # ─────────────────────────────────────────────────────────────────────────────
+# This file can also be invoked with `cmake -P` to rewrite package:// URIs in
+# generated URDF files.
+# ─────────────────────────────────────────────────────────────────────────────
+if(CMAKE_SCRIPT_MODE_FILE AND MC_RTC_REWRITE_PACKAGE_URI)
+  if(NOT DEFINED INPUT_FILE)
+    message(FATAL_ERROR "INPUT_FILE is required")
+  endif()
+
+  if(NOT EXISTS "${INPUT_FILE}")
+    message(FATAL_ERROR "Input file does not exist: ${INPUT_FILE}")
+  endif()
+
+  if(NOT DEFINED PACKAGE_NAME)
+    message(FATAL_ERROR "PACKAGE_NAME is required")
+  endif()
+
+  if(NOT DEFINED PACKAGE_SHARE)
+    message(FATAL_ERROR "PACKAGE_SHARE is required")
+  endif()
+
+  file(TO_CMAKE_PATH "${PACKAGE_SHARE}" PACKAGE_SHARE)
+
+  file(READ "${INPUT_FILE}" URDF_CONTENT)
+
+  set(PACKAGE_URI "package://${PACKAGE_NAME}/")
+  set(FILE_URI "file://${PACKAGE_SHARE}/")
+
+  string(REPLACE "${PACKAGE_URI}" "${FILE_URI}" URDF_CONTENT "${URDF_CONTENT}")
+
+  file(WRITE "${INPUT_FILE}" "${URDF_CONTENT}")
+
+  message(STATUS "Rewrote ${PACKAGE_URI} to ${FILE_URI} in ${INPUT_FILE}")
+
+  return()
+endif()
+# ─────────────────────────────────────────────────────────────────────────────
 # mc_rtc_generate_robot_description(MODELS <model1> [model2 ...] [TARGET_NAME
 # <name>] [PARENT_PATH <path>] [XACRO_PATH <path>] [URDF_DIR <path>]
 # [XACRO_IN_TEMPLATE <template>] [WRAPPER_TEMPLATE <wrapper.in>] [RSDF_DIR
@@ -60,10 +96,30 @@ function(mc_rtc_generate_robot_description)
   cmake_parse_arguments(
     _arg
     "LOWERCASE"
-    "TARGET_NAME;PARENT_PATH;XACRO_PATH;XACRO_IN_TEMPLATE;WRAPPER_TEMPLATE;RSDF_DIR;URDF_DIR;MESHES"
+    "TARGET_NAME;PARENT_PATH;XACRO_PATH;XACRO_IN_TEMPLATE;WRAPPER_TEMPLATE;RSDF_DIR;URDF_DIR;MESHES;PACKAGE_NAME;PACKAGE_SHARE"
     "MODELS"
     ${ARGN})
 
+  if(_arg_PACKAGE_NAME AND NOT _arg_PACKAGE_SHARE)
+    message(
+      FATAL_ERROR
+        "mc_rtc_generate_robot_description(): PACKAGE_SHARE is required when PACKAGE_NAME is provided"
+    )
+  endif()
+
+  if(_arg_PACKAGE_SHARE AND NOT _arg_PACKAGE_NAME)
+    message(
+      FATAL_ERROR
+        "mc_rtc_generate_robot_description(): PACKAGE_NAME is required when PACKAGE_SHARE is provided"
+    )
+  endif()
+
+  if(_arg_PACKAGE_SHARE AND NOT EXISTS "${_arg_PACKAGE_SHARE}")
+    message(
+      FATAL_ERROR
+        "mc_rtc_generate_robot_description(): PACKAGE_SHARE does not exist: ${_arg_PACKAGE_SHARE}"
+    )
+  endif()
   if(NOT _arg_MODELS)
     message(
       FATAL_ERROR "mc_rtc_generate_robot_description(): MODELS is required")
@@ -149,6 +205,7 @@ function(mc_rtc_generate_robot_description)
 
   set(_GENERATED_URDFS "")
   set(_GENERATED_RSDFS "")
+  set(_MC_RTC_MACROS_FILE "${CMAKE_CURRENT_FUNCTION_LIST_FILE}")
 
   foreach(MODEL ${_arg_MODELS})
     # ── Output name ──
@@ -160,6 +217,14 @@ function(mc_rtc_generate_robot_description)
     set(MODEL_OUT "${MODEL_LOWER}")
 
     set(URDF_OUT "${CMAKE_CURRENT_BINARY_DIR}/urdf/${MODEL_OUT}.urdf")
+
+    set(_URI_REWRITE_COMMAND "")
+    if(_arg_PACKAGE_NAME)
+      set(_URI_REWRITE_COMMAND
+          COMMAND "${CMAKE_COMMAND}" "-DMC_RTC_REWRITE_PACKAGE_URI=ON"
+          "-DINPUT_FILE=${URDF_OUT}" "-DPACKAGE_NAME=${_arg_PACKAGE_NAME}"
+          "-DPACKAGE_SHARE=${_arg_PACKAGE_SHARE}" -P "${_MC_RTC_MACROS_FILE}")
+    endif()
 
     # ── URDF strategy selection ──
     if(_arg_WRAPPER_TEMPLATE AND _arg_XACRO_PATH)
@@ -174,9 +239,8 @@ function(mc_rtc_generate_robot_description)
         COMMAND ${CMAKE_COMMAND} -E make_directory
                 "${CMAKE_CURRENT_BINARY_DIR}/urdf"
         COMMAND
-          ${CMAKE_COMMAND} -E env
-          "AMENT_PREFIX_PATH=/usr/local:$ENV{AMENT_PREFIX_PATH}" ${XACRO}
-          "${WRAPPER_XACRO}" -o "${URDF_OUT}"
+          ${CMAKE_COMMAND} -E env "AMENT_PREFIX_PATH=$ENV{AMENT_PREFIX_PATH}"
+          ${XACRO} "${WRAPPER_XACRO}" -o "${URDF_OUT}" ${_URI_REWRITE_COMMAND}
         DEPENDS "${WRAPPER_XACRO}" ${_XACRO_DEPS}
         COMMENT "xacro (wrapper) -> ${MODEL_OUT}.urdf"
         VERBATIM)
@@ -196,9 +260,9 @@ function(mc_rtc_generate_robot_description)
         COMMAND ${CMAKE_COMMAND} -E make_directory
                 "${CMAKE_CURRENT_BINARY_DIR}/urdf"
         COMMAND
-          ${CMAKE_COMMAND} -E env
-          "AMENT_PREFIX_PATH=/usr/local:$ENV{AMENT_PREFIX_PATH}" ${XACRO}
-          "${_CONFIGURED_XACRO}" -o "${URDF_OUT}"
+          ${CMAKE_COMMAND} -E env "AMENT_PREFIX_PATH=$ENV{AMENT_PREFIX_PATH}"
+          ${XACRO} "${_CONFIGURED_XACRO}" -o "${URDF_OUT}"
+          ${_URI_REWRITE_COMMAND}
         DEPENDS "${_CONFIGURED_XACRO}" ${_XACRO_DEPS}
         COMMENT "xacro (configured) -> ${MODEL_OUT}.urdf"
         VERBATIM)
@@ -212,9 +276,8 @@ function(mc_rtc_generate_robot_description)
         COMMAND ${CMAKE_COMMAND} -E make_directory
                 "${CMAKE_CURRENT_BINARY_DIR}/urdf"
         COMMAND
-          ${CMAKE_COMMAND} -E env
-          "AMENT_PREFIX_PATH=/usr/local:$ENV{AMENT_PREFIX_PATH}" ${XACRO}
-          "${_XACRO_FILE}" -o "${URDF_OUT}"
+          ${CMAKE_COMMAND} -E env "AMENT_PREFIX_PATH=$ENV{AMENT_PREFIX_PATH}"
+          ${XACRO} "${_XACRO_FILE}" -o "${URDF_OUT}" ${_URI_REWRITE_COMMAND}
         DEPENDS "${_XACRO_FILE}" ${_XACRO_DEPS}
         COMMENT "xacro -> ${MODEL_OUT}.urdf"
         VERBATIM)
@@ -223,6 +286,14 @@ function(mc_rtc_generate_robot_description)
       # Strategy 4: .in.urdf configure_file
       configure_file("${_arg_URDF_DIR}/${MODEL}.in.urdf" "${URDF_OUT}")
 
+      if(_arg_PACKAGE_NAME)
+        execute_process(
+          COMMAND
+            "${CMAKE_COMMAND}" "-DMC_RTC_REWRITE_PACKAGE_URI=ON"
+            "-DINPUT_FILE=${URDF_OUT}" "-DPACKAGE_NAME=${_arg_PACKAGE_NAME}"
+            "-DPACKAGE_SHARE=${_arg_PACKAGE_SHARE}" -P "${_MC_RTC_MACROS_FILE}"
+            COMMAND_ERROR_IS_FATAL ANY)
+      endif()
     endif()
 
     list(APPEND _GENERATED_URDFS "${URDF_OUT}")

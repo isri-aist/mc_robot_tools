@@ -19,6 +19,14 @@ find_description_package(robotiq_description REQUIRED)
 
 set(ROBOTIQ_GRIPPER_MODELS robotiq_2f_85_gripper robotiq_2f_140_gripper)
 
-mc_rtc_generate_robot_description(MODELS ${ROBOTIQ_GRIPPER_MODELS})
+mc_rtc_generate_robot_description(
+  MODELS
+  ${ROBOTIQ_GRIPPER_MODELS}
+  XACRO_PATH
+  "${CMAKE_CURRENT_SOURCE_DIR}/xacro"
+  PACKAGE_NAME
+  robotiq_description
+  PACKAGE_SHARE
+  "${ROBOTIQ_DESCRIPTION_SHARE}")
 
 mc_rtc_generate_robot_module()

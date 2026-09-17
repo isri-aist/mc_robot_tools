@@ -67,4 +67,13 @@ inline std::vector<std::string> listScrew()
   return {};
 }
 
+inline std::vector<std::string> listSSG48Gripper()
+{
+  // clang-format off
+  const bool WITH_SSG48_GRIPPER_BOOL = @WITH_SSG48_GRIPPER_BOOL@;
+  // clang-format on
+  if(WITH_SSG48_GRIPPER_BOOL) return {"SSG48Gripper"};
+  return {};
+}
+
 } // namespace mc_robot_tools
