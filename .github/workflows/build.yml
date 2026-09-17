@@ -110,7 +110,7 @@ jobs:
           colcon build --packages-select \
             bota_driver \
             robotiq_description \
-            robotiq_hande_description
+            ssg48_gripper_description
 
           # Expose the overlay to `build-cmake-project` and the ctest it runs.
           . install/setup.bash
