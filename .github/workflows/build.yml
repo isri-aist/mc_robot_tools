@@ -122,6 +122,7 @@ jobs:
             -DWITH_PLATE=ON \
             -DWITH_REALSENSE_CAMERA=ON \
             -DWITH_ROBOTIQ_GRIPPER=ON \
+            -DWITH_ROBOTIQ_HANDE=ON \
             -DWITH_SCREW=ON
           make -j$(nproc)
           sudo make install
