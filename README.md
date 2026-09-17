@@ -10,6 +10,20 @@ Prerequisite: [mc_rtc](https://jrl-umi3218.github.io/mc_rtc) must already be ins
 
 ```sh
 git clone https://github.com/isri-aist/mc_robot_tools.git
+```
+
+Some tools depend on an external ROS description package for their geometry (see [Available Robot Tools](#available-robot-tools)). Fetch and build the ones you need with [vcstool](https://github.com/dirk-thomas/vcstool) and `colcon`, then source the resulting workspace so `find_package()` can locate them:
+
+```sh
+mkdir -p ros2_ws/src
+vcs import --input mc_robot_tools/dependencies.repos ros2_ws/src
+cd ros2_ws
+colcon build
+source install/setup.bash
+cd ..
+```
+
+```sh
 cd mc_robot_tools
 mkdir -p build && cd build
 cmake ..
@@ -198,8 +212,8 @@ Each tool follows this layout:
 - [ ] Run ctest --verbose locally to verify the module loads without segfaults or unresolved frames
 
 ##### 5. Update CI
-- [ ] Add `-DWITH_<NEW_TOOL>=ON` to the `options` of the "Build and test" step in `.github/workflows/build.yml`.
-  - If the tool needs a ROS description package: install it from apt via the `ros:` `apt:` list of the "Install dependencies" step when it is released to the ROS index, otherwise add its repository to the "Build ROS description packages" step (`git clone` + `--packages-select`).
+- [ ] Add `WITH_<NEW_TOOL>` option to step "Build and test" in `.github/workflows/build.yml`.
+  - If the tool needs a ROS description package: add it to [dependencies.repos](dependencies.repos) and to the `--packages-select` list in the "Install ROS description packages" step.
 
 ##### 6. Documentation
 - [ ] Update this README with the new tool name, dependencies, any notable configuration options.
