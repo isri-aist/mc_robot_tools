@@ -48,6 +48,7 @@ sudo make install
 |**plate**|None|
 |**realsense_camera**|None|
 |**robotiq_gripper**|[ros2_robotiq_gripper/robotiq_description](https://github.com/PickNikRobotics/ros2_robotiq_gripper/tree/main/robotiq_description)|
+|**robotiq_hande**|[robotiq_hande_description](https://github.com/macmacal/robotiq_hande_description/tree/humble-devel)|
 |**screw**|None|
 |**ssg48_gripper**|[ssg48_adaptive_electric_gripper_ros2/ssg48_gripper_description](https://github.com/Lass6230/ssg48_adaptive_electric_gripper_ros2/tree/main/ssg48_gripper_description)|
 
@@ -94,7 +95,7 @@ Every tool module falls into one of two categories (see the [table above](#avail
 
 If you want to add a new tool, use the existing modules as reference:
 - Self-contained examples: Check out the [ds4](ds4/), [plate](plate/), or [realsense_camera](realsense_camera/) directories.
-- ROS description examples: Check out the [bota_sensor](bota_sensor/) or [robotiq_gripper](robotiq_gripper/) directories.
+- ROS description examples: Check out the [bota_sensor](bota_sensor/), [robotiq_gripper](robotiq_gripper/), [robotiq_hande](robotiq_hande/) directories.
 
 #### How module generation works
 
@@ -164,6 +165,10 @@ Each tool follows this layout:
     add_subdirectory(<new_tool>)
   endif()
   ```
+- [ ] Add the corresponding conversion in the top-level `CMakeLists.txt`:
+  ```cmake
+  foreach(opt ... <NEW_TOOL>)
+  ```
 - [ ] Add the tool to the CMake-generated header include/mc_robot_tools/mc_robot_tools.in.h:
   ```cpp
   inline std::vector<std::string> list<NewTool>()
@@ -177,10 +182,6 @@ Each tool follows this layout:
     }
     return {};
   }
-  ```
-- [ ] Add the corresponding conversion in the top-level CMakeLists' foreach:
-  ```cmake
-  foreach(opt ... <NEW_TOOL>)
   ```
 
 ##### 2. Implement the module

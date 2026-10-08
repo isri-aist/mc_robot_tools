@@ -110,28 +110,33 @@ jobs:
           colcon build --packages-select \
             bota_driver \
             robotiq_description \
+            robotiq_hande_description \
             ssg48_gripper_description
 
-          # Expose the overlay to `build-cmake-project` and the ctest it runs.
-          . install/setup.bash
-          {
-            echo "AMENT_PREFIX_PATH=${AMENT_PREFIX_PATH}"
-            echo "CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH:-}"
-            echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}"
-          } >> "${GITHUB_ENV}"
+      # ── Environment ──
+      - name: Export environment
+        run: |
+          source /opt/ros/${ROS_DISTRO}/setup.bash
+          source /tmp/ros2_ws/install/setup.bash
 
-      # ── Build & test ──
+          echo "PATH=/opt/ros/${ROS_DISTRO}/bin:${PATH}" >> $GITHUB_ENV
+          echo "AMENT_PREFIX_PATH=$AMENT_PREFIX_PATH" >> $GITHUB_ENV
+          echo "CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH" >> $GITHUB_ENV
+          echo "PYTHONPATH=$PYTHONPATH" >> $GITHUB_ENV
+          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      # ── Build & Test ──
       - name: Build and test
-        uses: jrl-umi3218/github-actions/build-cmake-project@master
-        with:
-          compiler: ${{ matrix.compiler }}
-          build-type: ${{ matrix.build-type }}
-          options: >-
-            -DWITH_BOTA_SENSOR=ON
-            -DWITH_DS4=ON
-            -DWITH_PLATE=ON
-            -DWITH_REALSENSE_CAMERA=ON
-            -DWITH_ROBOTIQ_GRIPPER=ON
+        run: |
+          mkdir build && cd build
+          cmake .. \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
+            -DWITH_BOTA_SENSOR=ON \
+            -DWITH_DS4=ON \
+            -DWITH_PLATE=ON \
+            -DWITH_REALSENSE_CAMERA=ON \
+            -DWITH_ROBOTIQ_GRIPPER=ON \
+            -DWITH_ROBOTIQ_HANDE=ON \
             -DWITH_SCREW=ON
             -DWITH_SSG48_GRIPPER=ON
 
