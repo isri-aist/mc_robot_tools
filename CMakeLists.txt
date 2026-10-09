@@ -22,6 +22,7 @@ option(WITH_REALSENSE_CAMERA "Build realsense_camera module" OFF)
 option(WITH_ROBOTIQ_GRIPPER "Build robotiq_gripper" OFF)
 option(WITH_ROBOTIQ_HANDE "Build robotiq_hande" OFF)
 option(WITH_SCREW "Build screw module" OFF)
+option(WITH_SSG48_GRIPPER "Build ssg48_gripper module" OFF)
 
 find_package(mc_rtc REQUIRED)
 find_program(XACRO xacro REQUIRED)
@@ -39,7 +40,8 @@ foreach(
   REALSENSE_CAMERA
   ROBOTIQ_GRIPPER
   ROBOTIQ_HANDE
-  SCREW)
+  SCREW
+  SSG48_GRIPPER)
   if(WITH_${opt})
     set(WITH_${opt}_BOOL "true")
   else()
@@ -137,4 +139,8 @@ endif()
 
 if(WITH_SCREW)
   add_subdirectory(screw)
+endif()
+
+if(WITH_SSG48_GRIPPER)
+  add_subdirectory(ssg48_gripper)
 endif()

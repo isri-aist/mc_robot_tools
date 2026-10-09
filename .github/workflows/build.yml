@@ -19,16 +19,29 @@ jobs:
         build-type: [RelWithDebInfo]
         compiler: [gcc]
 
-    env:
-      ROS_DISTRO: humble
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: recursive
 
-      # ── Pre-commit ──
+      - name: Install dependencies
+        uses: jrl-umi3218/github-actions/install-dependencies@master
+        with:
+          compiler: ${{ matrix.compiler }}
+          build-type: ${{ matrix.build-type }}
+          ubuntu: |
+            apt-mirrors:
+              ros:
+                mirror: http://packages.ros.org/ros2/ubuntu
+                key-uri: https://raw.githubusercontent.com/ros/rosdistro/master/ros.key
+              mc-rtc:
+                cloudsmith: mc-rtc/head
+            apt: libmc-rtc-dev clang-tidy
+          ros: |
+            apt: ros-base mc-rtc-plugin xacro
+
+      # ── Pre-commit (clang-format, cmake-format, ...) ──
       - name: Cache pre-commit
         uses: actions/cache@v4
         with:
@@ -40,10 +53,10 @@ jobs:
           pip install pre-commit
           pre-commit run --all-files
 
-      # ── ROS ──
-      - name: Setup ROS
+      - name: Build ROS description packages
         run: |
-          set -eux
+          set -ex
+          source "/opt/ros/${ROS_DISTRO:-humble}/setup.bash"
 
           sudo apt update
           sudo apt install -y curl gnupg2 lsb-release ca-certificates
@@ -97,7 +110,8 @@ jobs:
           colcon build --packages-select \
             bota_driver \
             robotiq_description \
-            robotiq_hande_description
+            robotiq_hande_description \
+            ssg48_gripper_description
 
       # ── Environment ──
       - name: Export environment
@@ -123,10 +137,8 @@ jobs:
             -DWITH_REALSENSE_CAMERA=ON \
             -DWITH_ROBOTIQ_GRIPPER=ON \
             -DWITH_ROBOTIQ_HANDE=ON \
-            -DWITH_SCREW=ON
-          make -j$(nproc)
-          sudo make install
-          ctest --output-on-failure
+            -DWITH_SCREW=ON \
+            -DWITH_SSG48_GRIPPER=ON
 
       - name: Run clang-tidy
         run: |

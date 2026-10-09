@@ -50,6 +50,7 @@ sudo make install
 |**robotiq_gripper**|[ros2_robotiq_gripper/robotiq_description](https://github.com/PickNikRobotics/ros2_robotiq_gripper/tree/main/robotiq_description)|
 |**robotiq_hande**|[robotiq_hande_description](https://github.com/macmacal/robotiq_hande_description/tree/humble-devel)|
 |**screw**|None|
+|**ssg48_gripper**|[ssg48_adaptive_electric_gripper_ros2/ssg48_gripper_description](https://github.com/Lass6230/ssg48_adaptive_electric_gripper_ros2/tree/main/ssg48_gripper_description)|
 
 ## Usage
 
