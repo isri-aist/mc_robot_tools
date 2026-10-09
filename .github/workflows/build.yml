@@ -137,7 +137,7 @@ jobs:
             -DWITH_REALSENSE_CAMERA=ON \
             -DWITH_ROBOTIQ_GRIPPER=ON \
             -DWITH_ROBOTIQ_HANDE=ON \
-            -DWITH_SCREW=ON
+            -DWITH_SCREW=ON \
             -DWITH_SSG48_GRIPPER=ON
 
       - name: Run clang-tidy
